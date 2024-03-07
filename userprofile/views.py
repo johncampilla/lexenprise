@@ -152,6 +152,7 @@ def addlawyer(request, pk):
         lawyerprofile = Lawyer_Data.objects.get(lawyerID_id = pk)
     except Lawyer_Data.DoesNotExist: 
         lawyerprofile = None  
+    print(lawyerprofile)
 
     if not lawyerprofile:
         if request.method == 'POST':

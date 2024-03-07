@@ -52,12 +52,13 @@ class EditUserProfileForm(forms.ModelForm):
 class LawyerDataForm(forms.ModelForm):
     class Meta:
         model = Lawyer_Data
-        fields = 'lawyerID','lawyer_name','access_code','phone','IBPRollNo','IBPChapter','IBPLifetimeNo','Specialization','remarks', 'date_hired'
+        fields = 'lawyerID','lawyer_name','access_code','phone','hourlyrate','IBPRollNo','IBPChapter','IBPLifetimeNo','Specialization','remarks', 'date_hired'
         Widgets = {
             'lawyerID' : forms.Select(attrs={'class': 'form-control', 'cols': 200, 'rows': 2}),
             'lawyer_name': forms.TextInput(attrs={'class': 'form-control'}),
             'access_code': forms.TextInput(attrs={'class': 'form-control'}),
             'phone': forms.TextInput(attrs={'class': 'form-control'}),
+            'hourlyrate' : forms.TextInput(attrs={'class': 'form-control'}),
             'IBPRollNo' : forms.TextInput(attrs={'class': 'form-control'}),
             'IBPChapter' : forms.TextInput(attrs={'class': 'form-control'}),
             'IBPLifetimeNo' : forms.TextInput(attrs={'class': 'form-control'}),
