@@ -1,6 +1,7 @@
 import pyotp
 from datetime import datetime, timedelta
 from django.conf import settings
+from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.core.mail import send_mail
 
@@ -24,4 +25,6 @@ def send_otp(request):
     email = email
     from_email = settings.EMAIL_HOST_USER
     send_mail(subject, message, from_email, [email])    
+    messages.error(request, 'SIGN UP SUCCESSFUL, WELCOME TO DASHBOARD')
+
 

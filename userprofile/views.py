@@ -40,6 +40,7 @@ def register(request):
 def mylogin(request):
     form = LoginForm()
     if request.method == 'POST':
+        print("Pumasok dito")
         form = LoginForm(request, data=request.POST)
         if form.is_valid():
             username = request.POST.get('username')
@@ -48,7 +49,15 @@ def mylogin(request):
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 auth.login(request, user)
+                messages.success(request, 'Login successful, Welcome back!')
                 return redirect('dashboard-index')
+            else:
+                messages.error(request, 'Invalid username or password')
+        else:
+            messages.error(request, 'Invalid username or password')
+    else:      
+        form = LoginForm()
+
     context = {
         'form' : form,
     }
@@ -212,11 +221,7 @@ def editlawyer(request, pk):
             'form':form,
         }
 
-
     return render(request, 'user/editlawyer.html', context)
-
-
-
 
 @login_required
 def removeuser(request, pk):
@@ -260,14 +265,18 @@ def userloginview(request):
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
             user = authenticate(request, username=username, password=password)
-            email = user.email
-            print(email)
             if user is not None:
+                email = user.email
                 send_otp(request)
                 request.session['username'] = username
                 return redirect('otp')
             else:
+                messages.error(request, 'INVALID USERNAME AND PASSWORD!')
                 return redirect('login')
+        else:
+            messages.error(request, 'INVALID USERNAME AND PASSWORD!')
+    else:
+        form = userloginform(request.POST or None)
     
     context = {
         'form' : form,
@@ -294,17 +303,20 @@ def otp_view(request):
                         login(request, user)
                         del request.session['otp_secret_key']
                         del request.session['otp_valid_date']
+                        messages.error(request, 'SIGN UP SUCCESSFUL!')
                         return redirect('dashboard-index')
                     else:
                         error_message = 'Invalid one-time password'
+                        messages.error(request, 'INVALID ONE-TIME PASSWORD!')
                         return redirect('login')
                 else:
-                    error_message = "One-time password has expired"
+                    messages.error(request, "ONE-TIME PASSWORD, EXPIRED!")
                     return redirect('login')
             else:
-                error_message = "Oopps.. something went wrong"
+                messages.error(request, "SOMETHING WENT WRONG")
                 return redirect('login')
         else:
+            messages.error(request, "SOMETHING WENT WRONG")
             return redirect('login')
             
         # if error_message:messages.add_message(request, messages.ERROR, error_message)

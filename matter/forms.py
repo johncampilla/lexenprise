@@ -317,7 +317,7 @@ class ClGoodsForm(forms.ModelForm):
         widgets = {
             'matter': forms.Select(attrs={'class': 'form-control', 'cols': 200, 'rows': 2}),
             'nice_class': forms.Select(attrs={'class': 'form-control', 'cols': 200, 'rows': 1}),
-            'class_description': forms.Textarea(attrs={'class': 'form-control', 'cols': 200, 'rows': 3}),
+            'class_description': forms.Textarea(attrs={'class': 'form-control', 'cols': 200, 'rows': 10}),
         }
 
 class EditClGoodsForm(forms.ModelForm):

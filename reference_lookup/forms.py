@@ -141,7 +141,7 @@ class ClGoodsProfileForm(forms.ModelForm):
         fields = '__all__'
         widgets = {
             'nice_class': forms.TextInput(attrs={'class': 'form-control'}),
-            'class_description': forms.Textarea(attrs={'class': 'form-control', 'cols': 200, 'rows': 2}),
+            'class_description': forms.Textarea(attrs={'class': 'form-control', 'cols': 200, 'rows': 10}),
         }
 
 class StatusForm(forms.ModelForm):
