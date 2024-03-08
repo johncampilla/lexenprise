@@ -29,7 +29,7 @@ User List
                             <th scope="col" style="width:20%;">Name</th>
                             <th scope="col" style="width:25%;">address</th>
                             <th scope="col" style="width:10%;">rank</th>
-                            <th scope="col" style="width:15%;">supporto</th>
+                            <th scope="col" style="width:15%;">email</th>
                             <th scope="col" style="width:10%;">mobile</th>
                             <th scope="col" style="width:5%;">Action</th>
                         </tr>
@@ -44,7 +44,7 @@ User List
                             <td>{{ user.name }}</td>
                             <td>{{ user.address }}</td>
                             <td>{{ user.rank }}</td>
-                            <td>{{ user.supporto }}</td>
+                            <td>{{ user.userid.email }}</td>
                             <td>{{ user.mobile }}</td>
                             <td style="text-align: center;"><a class="btn btn-secondary btn-sm"
                                     href="{% url 'define-userinfo' user.id %}" title="Select User"><i

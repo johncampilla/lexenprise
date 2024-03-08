@@ -11,13 +11,18 @@ Layer
         <div class="my-3 mx-3">
             <div class="col-md-6 offset-md-3">
                 <div class="border bg-white p-3 bg-gradient-primary text-black">
-                    <h6>New Folder Type</h6>
+                    <h6>Lawyer Other Info - {{userprofile}}</h6>
                     <hr>
                         <form action="" method="POST">
                             {% csrf_token %}
                             <div class="col-auto">
                                 <div class="row">
                                     <div class="col-lg-12">
+                                        {% for msg in messages %}
+                                            <div class="alert alert-danger text-center" role="alert">
+                                                {{ msg }} 
+                                            </div>          
+                                        {% endfor%}
                                         <div class="input-group input-group-sm mb-1">
                                             <span class="input-group-text" style="width: 110px;">Lawyer</span>
                                             {{form.lawyerID}}
@@ -51,10 +56,6 @@ Layer
                                             {{form.IBPLifetimeNo}}
                                         </div>
                                         <div class="input-group input-group-sm mb-1">
-                                            <span class="input-group-text" style="width: 110px;">IBP Lifetime#</span>
-                                            {{form.IBPLifetimeNo}}
-                                        </div>
-                                        <div class="input-group input-group-sm mb-1">
                                             <span class="input-group-text" style="width: 110px;">Specialization</span>
                                             {{form.Specialization}}
                                         </div>
@@ -69,7 +70,7 @@ Layer
                                     </div>
                                 </div>
                                 <!-- <button type="submit" class="btn btn-primary mb-3">Save Record</button> -->
-                                <a class='btn btn-success' href="{% url 'reference-index' %}">Return</a>
+                                <a class='btn btn-success' href="{% url 'list-user' %}">Return</a>
                                 <input class='btn btn-success' type="submit" value="Save">
                             </div>
                         </form>

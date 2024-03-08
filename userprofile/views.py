@@ -157,6 +157,8 @@ def edituser(request, pk):
     return render(request, 'user/edituserprofile.html', context)
 
 def addlawyer(request, pk):
+    userprofile = User_Profile.objects.get(id = pk)
+
     try:
         lawyerprofile = Lawyer_Data.objects.get(lawyerID_id = pk)
     except Lawyer_Data.DoesNotExist: 
@@ -170,6 +172,7 @@ def addlawyer(request, pk):
                 lawyer_rec = form.save(commit=False)
                 lawyer_rec.lawyerID_id = pk
                 lawyer_rec.save() 
+                messages.error(request, 'Successfully Added')                
                 return redirect('define-userinfo', pk)
             else:
                 form = LawyerDataForm()
@@ -179,6 +182,8 @@ def addlawyer(request, pk):
         context = {
             'form' : form,
             'lawyerprofile': lawyerprofile,
+            'userprofile': userprofile,
+            'pk' : pk,
         }
         return render(request, 'user/newlawyer.html', context)
     else:
@@ -192,10 +197,8 @@ def editlawyer(request, pk):
 
     if lawyerprofile:
         if request.method == 'POST':
-            print("PUMASOK DITO")
             form = LawyerDataForm(request.POST, instance=lawyerprofile)
             if form.is_valid():
-                print("PUMASOK uli")
                 form.save() 
                 return redirect('list-user')
             else:
