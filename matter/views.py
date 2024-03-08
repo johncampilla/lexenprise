@@ -180,12 +180,13 @@ def NewInventorModal(request):
 #            return HttpResponseRedirect('/')
 
 @login_required
-def viewapplicants(request):
+def viewapplicants(request, pk):
     applicants = Applicant.objects.all().order_by('applicant')
     form = ApplicantProfileForm()
     context = {
         'applicants': applicants,
         'form': form,
+        'pk':pk,
     }
     return render(request, 'matter/listofapplicants.html', context)
 

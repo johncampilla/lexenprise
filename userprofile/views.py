@@ -192,30 +192,16 @@ def editlawyer(request, pk):
 
     if lawyerprofile:
         if request.method == 'POST':
+            print("PUMASOK DITO")
             form = LawyerDataForm(request.POST, instance=lawyerprofile)
             if form.is_valid():
+                print("PUMASOK uli")
                 form.save() 
-                return redirect('define-userinfo', pk)
+                return redirect('list-user')
             else:
                 form = LawyerDataForm(instance=lawyerprofile)
         else:
             form = LawyerDataForm(instance=lawyerprofile)
-        
-        context = {
-            'form':form,
-        }
-    else:
-        if request.method == 'POST':
-            form = LawyerDataForm(request.POST)
-            if form.is_valid():
-                lawyerdata_rec = form.save(commit=False)
-                lawyerdata_rec.lawyerID_id = pk
-                lawyerdata_rec.save() 
-                return redirect('define-userinfo', pk)
-            else:
-                form = LawyerDataForm()
-        else:
-            form = LawyerDataForm()
         
         context = {
             'form':form,
@@ -252,7 +238,7 @@ def userinfo(request, pk):
         'tasks' : tasks,
         'duedates': duedates,
     }
-    if user.rank == 'ASSOCIATES':
+    if user.rank == 'ASSOCIATES' or "MANAGIN PARTNER":
         return render(request, 'user/user_detail_lawyer.html', context)  
     else:
         return render(request, 'user/user_detail.html', context)

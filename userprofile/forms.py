@@ -53,7 +53,7 @@ class LawyerDataForm(forms.ModelForm):
     class Meta:
         model = Lawyer_Data
         fields = 'lawyerID','lawyer_name','access_code','phone','hourlyrate','IBPRollNo','IBPChapter','IBPLifetimeNo','Specialization','remarks', 'date_hired'
-        Widgets = {
+        widgets = {
             'lawyerID' : forms.Select(attrs={'class': 'form-control', 'cols': 200, 'rows': 2}),
             'lawyer_name': forms.TextInput(attrs={'class': 'form-control'}),
             'access_code': forms.TextInput(attrs={'class': 'form-control'}),
