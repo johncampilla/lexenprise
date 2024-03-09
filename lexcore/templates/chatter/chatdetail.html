@@ -24,7 +24,7 @@ Client Details
                     <div class="input-group input-group-sm mb-1 mt-1">
                         <span class="input-group-text" style="width: 113px;">message</span>
                         <input type="text" name="folder" value="{{message.messagebox}}" class="form-control" readonly>
-                        <a href="#" class="btn btn-secondary"> Reply</a>
+                        <a href="{% url 'reply-chat' message.id %}" class="btn btn-secondary"> Reply</a>
 
                     </div>
                 </div>

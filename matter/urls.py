@@ -7,6 +7,9 @@ urlpatterns = [
     path("matter/select/<int:pk>/'", views.SelectMatter, name='select-matter'),
     path('matter/newmatter/', views.NewMatter, name='new-matter'),
     path("matter/editmatter/<int:pk>'",views.EditMatter, name ='edit-matter'),
+
+    path("matter/editmatternonip/<int:pk>'",views.EditMatterNonIP, name ='edit-matter-nonip'),
+    
     path("matter/edit_ipmatter/<int:pk>'",views.Edit_IPMatter, name ='edit-ipmatter'),
     path('matter/priority/', views.NewPriority_modal, name='matter-new-priority'),
     path("matter/editpriority/<int:pk>/<int:mid>/'", views.EditPriority, name='matter-editpriority'),

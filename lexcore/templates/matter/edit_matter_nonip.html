@@ -100,33 +100,10 @@
                         <div class="col-lg-8 mb-2">
                             <a class='btn btn-secondary' href="{% url 'select-matter' matter.id %}">Return</a>
                             <input class='btn btn-secondary' type="submit" value="Save">
-                            <a class='btn btn-secondary' href="{% url 'edit-ipmatter' matter.id %}">Other Info</a>
                         </div>
                     </div>
                 </div>
             </form>
-            <div class="card">
-                <div class="card-header text-center text-white sm bg-primary mb-2">
-                    <a href="{% url 'add-image' matter.id %}" class="btn btn-secondary btn-sm mt-1"
-                        title="New Matter"><i class="fas fa-plus"></i></a>
-                    Attach Image files
-                </div>
-                <div class="container mb-2 mt-2">
-                    {% for image in image %}
-                    <img class="img-fluid" src="{{ image.imageURL }}" height="200" width="200" />
-                    {{image.description}} - {{image.docdate}}
-                    <div class="div">
-                        <a href="{% url 'edit-image' image.id %}" class="btn btn-secondary btn-sm mt-1" title="Edit"><i
-                                class="fas fa-edit"></i></a>
-                        <a href="{% url 'delete-image' image.id %}" class="btn btn-secondary btn-sm mt-1"
-                            title="Edit"><i class="fas fa-trash-alt"></i></a>
-
-                    </div>
-
-                    {% endfor %}
-                </div>
-            </div>
-
         </div>
     </div>
 </div>

@@ -26,26 +26,21 @@ Non-IP Details
                             <a class="nav-link" data-bs-toggle="tab" href="#activities">Activities</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-bs-toggle="tab" href="#procedural">Procedural History</a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link" data-bs-toggle="tab" href="#theory">Theory/Case Description</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-bs-toggle="tab" href="#evidence">Proof of Filing/Evidence</a>
+                            <a class="nav-link" data-bs-toggle="tab" href="#evidence">Documents/Files</a>
                         </li>
                     </ul>
 
                     <!-- Tab panes -->
                     <div class="tab-content">
                         <div class="tab-pane container active" id="detail">
-                            <a class="btn btn-primary btn-sm mt-1" href="#" title="New Matter"><i
-                                    class="fas fa-plus"></i></a>
-                            <a class="btn btn-primary btn-sm mt-1" href="{% url 'edit-matter' matter.id %}"
+                            <a class="btn btn-secondary btn-sm mt-1" href="{% url 'edit-matter-nonip' matter.id %}"
                                 title="Modify Matter">
                                 <i class="fas fa-edit"></i>
                             </a>
-                            <a class="btn btn-primary btn-sm mt-1" href="#" title="Delete Matter">
+                            <a class="btn btn-secondary btn-sm mt-1" href="#" title="Delete Matter">
                                 <i class="fas fa-trash-alt"></i></a>
                             <div class="row">
                                 <div class="col-lg-12">
@@ -142,16 +137,12 @@ Non-IP Details
                                             readonly>
                                     </div>
                                 </div>
-                                <div class="h6 pb-2 mb-2 text-success border-bottom border-success">
-                                    <b>Other Information</b>
-                                </div>
                             </div>
                         </div>
                         <div class="tab-pane container fade" id="duedates">
                             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 mb-md-0">
-                                <li><a class="btn btn-outline-primary btn-sm mb-1 mt-1"
+                                <li><a class="btn btn-secondary btn-sm mb-1 mt-1"
                                         href="{% url 'new-duedate' matter.id %}" title="New"><i class="fa fa-plus"></i>
-                                        Due Date
                                     </a>
                                 </li>
                             </ul>
@@ -251,14 +242,6 @@ Non-IP Details
                         </div>
                         <!-- ---End of Modal -->
                         <div class="tab-pane container fade" id="activities">
-                            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 mb-md-0">
-                                <li><a class="btn btn-outline-primary btn-sm mb-1 mt-1"
-                                        href="{% url 'new-activity' matter.id %}" title="New"><i class="fa fa-plus"></i>
-                                        Activity
-                                    </a>
-                                </li>
-                            </ul>
-
                             <table class="table-hover table-bordered table-sm small table" id="activitylisting">
                                 <thead class="table-primary text-center">
                                     <tr>
@@ -288,26 +271,9 @@ Non-IP Details
                             </table>
 
                         </div>
-                        <div class="tab-pane container fade" id="procedural">
-                            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 mb-md-0">
-                                <a class="btn btn-primary btn-sm mt-1" href="#" title="New Case Description"><i
-                                        class="fas fa-plus"></i></a>
-                            </ul>
-
-                            <div class="row mt-2">
-                                <div class="col-lg-12">
-                                    <div class="input-group input-group-sm mb-1">
-                                        <span class="input-group-text" style="width: 113px;">Detail
-                                        </span>
-                                        <input type="text" name="folder" value="{{casehistory.procedural_history}}"
-                                            class="form-control" readonly>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                         <div class="tab-pane container fade mb-2" id="theory">
                             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 mb-md-0">
-                                <a class="btn btn-primary btn-sm mt-1" href="{% url 'new-casedescription' matter.id %}"
+                                <a class="btn btn-secondary btn-sm mt-1" href="{% url 'new-casedescription' matter.id %}"
                                     title="New Case Description"><i class="fas fa-plus"></i></a>
                             </ul>
 
@@ -345,7 +311,7 @@ Non-IP Details
                         </div>
                         <div class="tab-pane container fade" id="evidence">
                             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 mb-md-0">
-                                <a class="btn btn-primary btn-sm mt-1" href="{% url 'new-case_evidence' matter.id %}"
+                                <a class="btn btn-secondary btn-sm mt-1" href="{% url 'new-case_evidence' matter.id %}"
                                     title="New Case Evidence"><i class="fas fa-plus"></i></a>
                             </ul>
                             <table class="table-hover table-bordered table-sm small table">
@@ -380,41 +346,9 @@ Non-IP Details
                                 </tbody>
                             </table>
                         </div>
-                        <div class="tab-pane container fade" id="inventors">
-                            <table class="table-hover table-bordered table-sm small table">
-                                <thead class="table-primary text-center">
-                                    <tr>
-                                        <th scope="col" style="width:3%;">#</th>
-                                        <th scope="col" style="width:30%;">Court</th>
-                                        <th scope="col" style="width:37%;">Address</th>
-                                        <th scope="col" style="width:20%;">Presiding Judge</th>
-                                        <th scope="col" style="width:5%;">Contact Number</th>
-                                        <th colspan="2" style="width:5%;">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {% for court in courts %}
-                                    <tr>
-                                        <td>{{ forloop.counter }}</td>
-                                        <td>{{ court.court }}</td>
-                                        <td>{{ court.address }}</td>
-                                        <td>{{ court.presiding_judge }}</td>
-                                        <td>{{ court.contact_number }}</td>
-                                        <td><a class="btn btn-primary btn-sm" href="{% url 'edit-courts' court.id %}"
-                                                title="Edit Due Date"><i class="fas fa-edit"></i></a>
-                                        </td>
-                                        <td><a class="btn btn-primary btn-sm" href="{% url 'new-courts' %}"
-                                                title="Edit Due Date"><i class="fa fa-plus"></i></a>
-                                        </td>
-                                    </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
-                        </div>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </div>

@@ -37,6 +37,16 @@ Patent Details
                         <li class="nav-item">
                             <a class="nav-link" data-bs-toggle="tab" href="#documents">Documents</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="tab" href="#TMImage">Image</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="tab" href="#Emails">Emails</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="tab" href="#chat">Chatter</a>
+                        </li>
+
 
                     </ul>
 
@@ -496,9 +506,9 @@ Patent Details
                             <a class="btn btn-secondary btn-sm mt-1 mb-1" data-bs-toggle="modal"
                                 data-bs-target="#newMatterApplicantModal" title="New Applicant"><i
                                     class="fas fa-plus"></i></a>
-                            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'view-applicants' %}"
+                            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'view-applicants' matter.id %}"
                                 title="List Applicants"><i class="fas fa-user-alt"></i>&nbsp;&nbsp;List Applicants</a>
-
+    
 
                             <table class="table-hover table-bordered table-sm small table">
                                 <thead class="table-primary text-center">
@@ -565,6 +575,80 @@ Patent Details
                                 </tbody>
                             </table>
                         </div>
+                        <div class="tab-pane container fade" id="TMImage">
+                            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'add-image' matter.id %}"> <i
+                                    class="fas fa-plus"></i></a>
+
+                            {% for image in image %}
+                            <a href="#"><img class="img-fluid mt-3" src="{{ image.imageURL }}" height="200"
+                                    width="200" /></a>
+                            {% endfor %}
+                        </div>
+                        <div class="tab-pane container fade" id="Emails">
+                            <table class="table-hover table-bordered table-sm small table" id="emaillist">
+                                <thead class="table-primary text-center">
+                                    <tr>
+                                        <th scope="col" style="width:3%;">#</th>
+                                        <th scope="col" style="width:20%;">Subject</th>
+                                        <th scope="col" style="width:5%;">Sent From</th>
+                                        <th scope="col" style="width:15%;">Sent To</th>
+                                        <th scope="col" style="width:17%;">Sent Date</th>
+                                        <th scope="col" style="width:50%;">Message</th>
+                                        <th scope="col" style="width:5%;">Select</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for email in emails %}
+                                    <tr>
+                                        <td>{{ forloop.counter }}</td>
+                                        <td>{{ email.subject }}</td>
+                                        <td>{{ email.sentby }}</td>
+                                        <td>{{ email.email }}</td>
+                                        <td>{{ email.created_at }}</td>
+                                        <td>{{ email.message }}</td>
+                                        <td style="text-align: center;"><a class="btn btn-secondary btn-sm"
+                                                href="{% url 'view-email' email.id %}" title="Select Email"><i
+                                                    class="far fa-hand-pointer"></i></a>
+                                        </td>
+
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="tab-pane container fade" id="chat">
+                            <!-- Button trigger modal -->
+                            <table class="table-hover table-bordered table-sm small table" id="maillist">
+                                <thead class="table-primary text-center">
+                                    <tr>
+                                        <th scope="col" style="width:3%;">#</th>
+                                        <th scope="col" style="width:10%;">Chat from</th>
+                                        <th scope="col" style="width:10%;">Chat to </th>
+                                        <th scope="col" style="width:15%;">Date</th>
+                                        <th scope="col" style="width:50%;">Message</th>
+                                        <th scope="col" style="width:5%;">Select</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for inboxmsg in msginbox %}
+                                    <tr>
+                                        <td>{{ forloop.counter }}</td>
+                                        <td><a href="{% url 'view-chat' inboxmsg.id %}">{{ inboxmsg.messagefrom }}</a>
+                                        </td>
+                                        <td>{{ inboxmsg.messageto }}</td>
+                                        <td>{{ inboxmsg.created_at }}</td>
+                                        <td>{{ inboxmsg.messagebox }}</td>
+                                        <td style="text-align: center;"><a class="btn btn-secondary btn-sm"
+                                                href="{% url 'open-chat' inboxmsg.id %}" title="Select Email"><i
+                                                    class="far fa-hand-pointer"></i></a>
+                                        </td>
+
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+
                     </div>
                 </div>
             </div>

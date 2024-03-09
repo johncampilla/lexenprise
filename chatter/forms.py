@@ -12,3 +12,5 @@ class chatform(forms.ModelForm):
             'messagebox': forms.Textarea(attrs={'class': 'form-control', 'cols': 200, 'rows': 2}),
         }
 
+
+

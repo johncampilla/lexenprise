@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponse
 from .models import inboxmessage, tempchatmessages
 from matter.models import Matters, IP_Matter
 from emailportal.models import Emails
@@ -56,6 +56,15 @@ def notify_chat(request):
     }
 
     return render(request, 'chatter/unreadmessages.html', context)
+
+def replychat(request, pk):
+    message = inboxmessage.objects.get(id=pk)
+    
+
+    context = {
+        'message' : message,
+    }
+    return render(request, 'chatter/reply.html', context)
 
 @login_required
 def reviewchat(request, pk):

@@ -232,6 +232,17 @@ Dashboard
                                     datasets: [{
                                         label: '# of Clients',
                                         data: [{% for data in industrydata %} {{ data.count }}, {% endfor %}],
+                                    backgroundColor: [
+                                            'rgba(181, 64, 126, 0.91)',
+                                            'rgba(255, 99, 132, 1)',
+                                            'rgba(54, 162, 235, 1)',
+                                            'rgba(255, 206, 86, 1)',
+                                            'rgba(75, 192, 192, 1)',
+                                            'rgba(153, 102, 255, 1)',
+                                            'rgba(255, 159, 64, 1)'
+                                        ],
+        
+
                                     borderWidth: 1
                                     }]
                                 },
@@ -266,12 +277,12 @@ Dashboard
                                         data: [{% for data in casetypedata %} {{ data.count }}, {% endfor %}],
                                     backgroundColor: [
                                     'rgba(181, 64, 126, 0.91)',
-                                    //'rgba(255, 99, 132, 1)',
-                                    //'rgba(54, 162, 235, 1)',
-                                    //'rgba(255, 206, 86, 1)',
-                                    // 'rgba(75, 192, 192, 1)',
-                                    // 'rgba(153, 102, 255, 1)',
-                                    // 'rgba(255, 159, 64, 1)'
+                                    'rgba(255, 99, 132, 1)',
+                                    'rgba(54, 162, 235, 1)',
+                                    'rgba(255, 206, 86, 1)',
+                                    'rgba(75, 192, 192, 1)',
+                                    'rgba(153, 102, 255, 1)',
+                                    'rgba(255, 159, 64, 1)'
                                 ],
                                     borderColor: [
                                     //'rgba(255, 99, 132, 1)',
@@ -308,20 +319,20 @@ Dashboard
                                 const totalmatterslawyer = document.getElementById('total-matters-lawyer');
 
                                 new Chart(totalmatterslawyer, {
-                                    type: 'line',
+                                    type: 'pie',
                                     data: {
                                         labels: [{% for data in lawyerdata %} '{{data.lawyer}}', {% endfor %}],
                                     datasets: [{
                                         label: '# of Clients',
                                         data: [{% for data in lawyerdata %} {{ data.count }}, {% endfor %}],
                                     backgroundColor: [
-                                    //'rgba(181, 64, 126, 0.91)',
+                                    'rgba(181, 64, 126, 0.91)',
                                     'rgba(255, 99, 132, 1)',
-                                    //'rgba(54, 162, 235, 1)',
-                                    //'rgba(255, 206, 86, 1)',
-                                    // 'rgba(75, 192, 192, 1)',
-                                    // 'rgba(153, 102, 255, 1)',
-                                    // 'rgba(255, 159, 64, 1)'
+                                    'rgba(54, 162, 235, 1)',
+                                    'rgba(255, 206, 86, 1)',
+                                    'rgba(75, 192, 192, 1)',
+                                    'rgba(153, 102, 255, 1)',
+                                    'rgba(255, 159, 64, 1)'
                                 ],
                                     borderColor: [
                                     //'rgba(255, 99, 132, 1)',
@@ -357,20 +368,20 @@ Dashboard
                                 const totalmattersfolder = document.getElementById('total-matters-folder');
 
                                 new Chart(totalmattersfolder, {
-                                    type: 'bar',
+                                    type: 'pie',
                                     data: {
                                         labels: [{% for data in folderdata %} '{{data.folder}}', {% endfor %}],
                                     datasets: [{
                                         label: '# of Matters',
                                         data: [{% for data in folderdata %} {{ data.count }}, {% endfor %}],
                                     backgroundColor: [
-                                    //'rgba(181, 64, 126, 0.91)',
-                                    //'rgba(255, 99, 132, 1)',
-                                    //'rgba(54, 162, 235, 1)',
-                                    //'rgba(255, 206, 86, 1)',
-                                    //'rgba(75, 192, 192, 1)',
+                                    'rgba(181, 64, 126, 0.91)',
+                                    'rgba(255, 99, 132, 1)',
+                                    'rgba(54, 162, 235, 1)',
+                                    'rgba(255, 206, 86, 1)',
+                                    'rgba(75, 192, 192, 1)',
                                     'rgba(153, 102, 255, 1)',
-                                    // 'rgba(255, 159, 64, 1)'
+                                    'rgba(255, 159, 64, 1)'
                                 ],
                                     borderColor: [
                                     //'rgba(255, 99, 132, 1)',
@@ -409,7 +420,7 @@ Dashboard
                                 const totalmattersip_nonip = document.getElementById('total-matters-ip-non-ip');
 
                                 new Chart(totalmattersip_nonip, {
-                                    type: 'line',
+                                    type: 'doughnut',
                                     data: {
                                         labels: [{% for data in apptypedata %} '{{data.applicationtype}}', {% endfor %}],
                                     datasets: [{
@@ -447,6 +458,7 @@ Dashboard
                                     datasets: [{
                                         label: '# of Matters',
                                         data: [{% for data in naturedata %} {{ data.count }}, {% endfor %}],
+
                                     borderWidth: 1
                                                                                                 }]
                                                                                             },

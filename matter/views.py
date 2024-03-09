@@ -277,6 +277,37 @@ def NewDueDate(request, mid):
         'matter':matter,
     }
     return render(request, 'matter/newduedate.html', context)   
+
+def EditMatterNonIP(request,pk):
+    matter = Matters.objects.get(id=pk)
+    activities = task_detail.objects.filter(matter_id = pk)
+    sid = matter.case_type.id
+    stype = CaseType.objects.get(id=sid)
+    apptype_id = matter.apptype.id
+    sapptype = AppType.objects.get(id=apptype_id)
+    image = IP_MatterImage.objects.filter(matter_id = pk)
+
+    if request.method == 'POST':
+        form = EditMatterForm(request.POST, instance=matter)
+        if form.is_valid():
+            form.save()
+            return redirect('select-matter', pk)
+        else:
+            form = EditMatterForm(instance=matter)
+    else:
+        form = EditMatterForm(instance=matter)
+    
+    context = {
+        'form' : form,
+        'matter' : matter,
+        'sapptype' : sapptype, 
+        'activities' : activities,  
+        'image': image,    
+    }    
+
+    return render(request, 'matter/edit_matter_nonip.html', context)   
+
+
 @login_required
 def EditMatter(request, pk):
     matter = Matters.objects.get(id=pk)
@@ -292,10 +323,8 @@ def EditMatter(request, pk):
         if form.is_valid():
             form.save()
             if sapptype.apptype == "NON-IP":
-                print('NONIP')
                 return redirect('edit-matter', matter.id)
             else :
-                print('IP')
                 return redirect('edit-ipmatter', matter.id)
             
         else:

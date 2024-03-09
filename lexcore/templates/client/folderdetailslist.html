@@ -9,17 +9,12 @@ Folder Matters
     {% include 'layout/sidebar.html' %}
     <div class="w-100">
         {% include 'layout/header.html' %}
-        <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
         <div class="my-3 mx-3">
             <div class="card">
                 <div class="card-header text-center mb-1" style=" color: black; background-color:rgb(228, 248, 188);">
-                    Matter
-                    List &nbsp;
+                    <b>Matter List</b>
                 </div>
-                <div class="col-lg-3">
-                    <a class="btn btn-secondary btn-sm" href="#" title="New Client"><i class="fas fa-plus"></i></a>
-                </div>
-                <table class="table-hover table-bordered table-sm small table" id="foldermatterlist">
+                <table class="table-hover table-bordered table-sm small table">
                     <thead class="table-primary text-center">
                         <tr>
                             <th scope="col" style="width:3%;">#</th>
@@ -49,7 +44,6 @@ Folder Matters
                 </table>
             </div>
             <a href="{% url 'select-client' client.id %}">Return</a>
-
         </div>
     </div>
 </div>
