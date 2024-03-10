@@ -12,6 +12,7 @@ urlpatterns = [
     
     path("client/newfolder/", views.newfolder, name='newclient-folder'),
     path("client/newfoldermatter/<int:pk>/<int:cid>/'", views.newfoldermatter, name='newfolder-matter'),
+    path("client/deletefolder/<int:pk>/<int:cid>/'", views.deleteclientfolder, name="delete-folder"),
     
     path("client/selectfolder/<int:pk>/<int:cid>/'", views.selectfolder, name='select-folder'),
     

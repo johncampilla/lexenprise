@@ -188,6 +188,14 @@ def removeclientmatter(request, pk, cid):
     matter = Matters.objects.get(id = pk)
     matter.delete()
     return redirect('select-client', cid)
+
+@login_required
+def deleteclientfolder(request, pk, cid):
+    folder = CaseFolder.objects.get(id=pk)
+    folder.delete()
+    messages.success(request, 'Login successful, Welcome back!')
+    return redirect('select-client', cid)
+    
 @login_required
 def removeclient(request, pk):
     client = Client_Data.objects.get(id = pk)

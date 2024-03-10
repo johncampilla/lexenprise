@@ -205,6 +205,9 @@ def index(request):
     #return render(request, 'dashboard/dashboard.html', context)
     return render(request, 'dashboard/dashchart.html', context)
 
+def displaylistofmatters(request):
+    pass
+    
 def details_ip_issuance(request):
     if today.month == 1 : 
         prev_month = 12

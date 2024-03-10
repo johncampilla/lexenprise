@@ -33,7 +33,7 @@ class MatterForm(forms.ModelForm):
 class EditMatterForm(forms.ModelForm):
     class Meta:
         model = Matters
-        fields = 'folder','matter_title', 'appearance', 'matter_contact_person', 'handling_lawyer','opposing_counsel', 'status', 'apptype', 'clientrefno', 'referenceno', 'filing_date', 'matterno', 'case_type', 'filed_at', 'nature', 'lawyers_involve', 'remarks', 'stage_group'
+        fields = 'folder','matter_title', 'appearance', 'matter_contact_person', 'handling_lawyer','opposing_counsel', 'status', 'apptype', 'clientrefno', 'referenceno', 'filing_date', 'matterno', 'case_type', 'filed_at', 'nature', 'lawyers_involve', 'remarks', 'stage_group','TM_Image'
         widgets = {
             'folder': forms.Select(attrs={'class': 'form-control', 'cols': 200, 'rows': 2}),
             'matter_title': forms.Textarea(attrs={'class': 'form-control', 'cols': 200, 'rows': 2}),

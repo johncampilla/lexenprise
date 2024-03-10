@@ -38,7 +38,7 @@ Trademark Details
                             <a class="nav-link" data-bs-toggle="tab" href="#invoices">Invoices</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-bs-toggle="tab" href="#TMImage">Image</a>
+                            <a class="nav-link" data-bs-toggle="tab" href="#TMImage">Other Images</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" data-bs-toggle="tab" href="#Emails">Emails</a>
@@ -51,6 +51,11 @@ Trademark Details
                     <!-- Tab panes -->
                     <div class="tab-content">
                         <div class="tab-pane container active" id="detail">
+                            {% if matter.TM_Image %}
+                            <div class="mt-1 mb-3 text-center">
+                                <img class="img-fluid mt-3" src="{{ matter.TM_Image.url }}" height=150 width=150>
+                            </div>
+                            {% endif %}
                             <a class="btn btn-secondary btn-sm mt-1" data-bs-toggle="modal"
                                 data-bs-target="#newmatterModal" title="New Matter"><i class="fas fa-plus"></i></a>
                             <a class="btn btn-secondary btn-sm mt-1" href="{% url 'edit-matter' matter.id %}"
@@ -68,6 +73,7 @@ Trademark Details
                                 Reference/Lookup Codes </a>
                             <div class="row">
                                 <div class="col-lg-12">
+
                                     <div class="input-group input-group-sm mb-1 mt-1">
                                         <span class="input-group-text" style="width: 113px;"> Case Folder</span>
                                         <input type="text" name="folder" value="{{matter.folder.folder_description}}"
@@ -78,8 +84,6 @@ Trademark Details
                                         <input type="text" name="folder" value="{{matter.matter_title}}"
                                             class="form-control" readonly>
                                     </div>
-                                </div>
-                                <div class="col-lg-10">
                                     <div class="input-group input-group-sm mb-1">
                                         <span class="input-group-text" style="width: 113px;">Claim Color </span>
                                         <input type="text" name="folder" value="{{ip_matter.claim_of_color}}"
@@ -100,9 +104,6 @@ Trademark Details
                                         <input type="text" name="folder" value="{{ip_matter.type_of_mark}}"
                                             class="form-control" readonly>
                                     </div>
-
-
-
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="input-group input-group-sm mb-1">
@@ -668,3 +669,4 @@ Trademark Details
     </div>
 </div>
 {% endblock %}
+

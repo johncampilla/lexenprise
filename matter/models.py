@@ -36,6 +36,8 @@ class Matters(models.Model):
     stage_group = models.ForeignKey(ActivityGroup, on_delete=models.CASCADE, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
+    TM_Image = models.ImageField(upload_to="TM_IMAGE/", blank=True, null=True)
+
 
     def __str__(self):
         return f'{self.matter_title} - {self.folder} - {self.matterno}'
@@ -201,9 +203,11 @@ class IP_Matter(models.Model):
     IR_date = models.DateField(null=True, blank=True)
     IR_renewalDate = models.DateField(null=True, blank=True)
     IR_subsequentDate = models.DateField(null=True, blank=True)
+    nice_class = models.CharField(max_length=60, blank=True, null=True)
     renewal_date = models.DateField(null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+    
 
     class Meta:
         verbose_name_plural = 'Other IP Information'

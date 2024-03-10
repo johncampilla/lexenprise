@@ -5,7 +5,7 @@
     <div class="w-100">
         {% include 'layout/header.html' %}
         <div class="my-3 mx-3">
-            <form action="" method="POST" class="row g-3">
+            <form action="" method="POST" enctype="multipart/form-data" class="row g-3" >
                 {% csrf_token %}
                 <div class="card">
                     <div class="card-header text-center text-white sm bg-primary mb-2">
@@ -94,6 +94,12 @@
                                 {{form.stage_group}}
                             </div>
                         </div>
+                        <div class="col-lg-6">
+                            <div class="input-group input-group-sm mb-1">
+                                <span class="input-group-text" style="width: 113px;">Image</span>
+                                {{form.TM_Image}}
+                            </div>
+                        </div>
 
                     </div>
                     <div class="row">
@@ -109,7 +115,7 @@
                 <div class="card-header text-center text-white sm bg-primary mb-2">
                     <a href="{% url 'add-image' matter.id %}" class="btn btn-secondary btn-sm mt-1"
                         title="New Matter"><i class="fas fa-plus"></i></a>
-                    Attach Image files
+                    Attach Other Images
                 </div>
                 <div class="container mb-2 mt-2">
                     {% for image in image %}

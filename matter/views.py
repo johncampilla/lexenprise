@@ -168,7 +168,8 @@ def NewApplicantModal(request):
         form = ApplicantProfileForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('view-applicants')
+            return redirect('select-matter', request.POST['matter'])
+#            return redirect('view-applicants', mid)
 
 @login_required
 def NewInventorModal(request):
@@ -181,9 +182,11 @@ def NewInventorModal(request):
 
 @login_required
 def viewapplicants(request, pk):
+    matter = Matters.objects.get(id = pk)
     applicants = Applicant.objects.all().order_by('applicant')
     form = ApplicantProfileForm()
     context = {
+        'matter' : matter,
         'applicants': applicants,
         'form': form,
         'pk':pk,
@@ -319,7 +322,7 @@ def EditMatter(request, pk):
     image = IP_MatterImage.objects.filter(matter_id = pk)
 
     if request.method == 'POST':
-        form = EditMatterForm(request.POST, instance=matter)
+        form = EditMatterForm(request.POST, request.FILES, instance=matter)
         if form.is_valid():
             form.save()
             if sapptype.apptype == "NON-IP":
@@ -546,13 +549,14 @@ def NewApplicantProfile(request, mid):
     return render(request, 'matter/newapplicantprofile.html', context)   
 
 @login_required
-def EditApplicant(request, pk):
+def EditApplicant(request, pk, mid):
+    
     applicant = Applicant.objects.get(id=pk)
     if request.method == 'POST':
         form = ApplicantProfileForm(request.POST, instance=applicant)
         if form.is_valid():
             form.save()
-            return redirect('view-applicants')
+            return redirect('view-applicants', mid)
         else:
             form = ApplicantProfileForm(instance=applicant)
     else:

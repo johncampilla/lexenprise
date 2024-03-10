@@ -46,6 +46,8 @@ urlpatterns = [
     path("dashboard/printlist_casetype/<str:selected>/'", views.detailcasetype, name='print-selected-casetype'),
     path("dashboard/printlist_nature/<str:selected>/'", views.detailnature, name='print-selected-nature'),
 
+    path('dashboard/listMatters/', views.displaylistofmatters, name='display_allmatters')
+
 
 
 

@@ -12,17 +12,11 @@
                         {% csrf_token %}
                         <div class="row">
                             <div class="col-lg-6">
-                                <!-- <div class="input-group input-group-sm mb-1">
+                                <div class="input-group input-group-sm mb-1">
                                     <span class="input-group-text" style="width: 113px;">ID</span>
                                     <input type="text" name="matter" value="{{matter.id}}" class="form-control"
                                         readonly>
                                 </div>
-                                <div class="input-group input-group-sm mb-1">
-                                    <span class="input-group-text" style="width: 113px;">Folder</span>
-                                    <input type="text" name="matter_title" value="{{matter.matter_title}}"
-                                        class="form-control" readonly>
-                                </div> -->
-
                                 <div class="input-group input-group-sm mb-1">
                                     <span class="input-group-text" style="width: 110px;">Applicant</span>
                                     {{form.applicant}}

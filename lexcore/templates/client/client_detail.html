@@ -195,6 +195,12 @@ Client Details
                     </table>
                 </div>
                 <div class="tab-pane container fade" id="folders">
+                    {% comment %} {% for msg in messages %}
+                        <div class="alert alert-danger text-center" role="alert">
+                            {{ msg }} 
+                        </div>          
+                    {% endfor%} {% endcomment %}
+
                     <a class="btn btn-secondary btn-sm mt-1" data-bs-toggle="modal" data-bs-target="#addfolderModal"
                         title="New Client Folder"><i class="fas fa-plus"></i></a>
                     <table class="table-hover table-bordered table-sm small table mt-1">
@@ -205,7 +211,7 @@ Client Details
                                 <th scope="col" style="width:30%;">Folder Description</th>
                                 <th scope="col" style="width:15%;">Supervising Lawyer</th>
                                 <th scope="col" style="width:15%;">Remarks</th>
-                                <th scope="col" style="width:5%;">Action</th>
+                                <th colspan = "2" style="width:5%;">Action</th>
 
                             </tr>
                         </thead>
@@ -225,6 +231,11 @@ Client Details
                                         href="{% url 'folder-detail' folder.id %}" title="View folder matters"><i
                                             class="far fa-hand-pointer"></i></a>
                                 </td>
+                                <td><a class="btn btn-secondary btn-sm"
+                                    href="{% url 'delete-folder' folder.id client.id %}" title="Remove Folder"><i
+                                        class="fas fa-trash-alt"></i></a>
+                                </td>
+
 
                             </tr>
                             {% endfor %}

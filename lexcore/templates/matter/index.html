@@ -29,6 +29,7 @@ Engagements
                             <th scope="col" style="width:5%;">Filing Date</th>
                             <th scope="col" style="width:22%;">Folder</th>
                             <th scope="col" style="width:10%;">Status</th>
+                            <th scope="col" style="width:10%;">Image</th>
                             <th scope="col" style="width:25%;">Matter Title</th>
                             <th scope="col" style="width:15%;">Matter No.</th>
                             <th scope="col" style="width:10%;">Client Ref</th>
@@ -43,6 +44,11 @@ Engagements
                             <td>{{ matter.filing_date | date:'m/d/Y' }}</td>
                             <td>{{ matter.folder }}</td>
                             <td>{{ matter.status }}</td>
+                            {% if matter.TM_Image %}
+                                <td> <img class="img-fluid mt-3" src="{{ matter.TM_Image.url }}" height=50 width=50></td>
+                            {% else %}
+                                <td>{{ matter.TM_Image }}</td>
+                            {% endif %}
                             <td>{{ matter.matter_title }}</td>
                             <td>{{ matter.matterno }}</td>
                             <td>{{ matter.clientrefno }}</td>
