@@ -49,7 +49,6 @@ def index(request):
     
     def lawyercount():
         lawyer_count = Matters.objects.values('handling_lawyer__access_code').annotate(noofmatters = Count('handling_lawyer__access_code')) 
-        print(lawyer_count)
         NumberOfMattersByLawyers.objects.all().delete()
         for data in lawyer_count :
             lawyers = data['handling_lawyer__access_code']
@@ -105,7 +104,6 @@ def index(request):
     casetypedata = NumberOfMattersByCaseType.objects.all().order_by('casetype')
     naturecount()
     naturedata = NumberOfMattersByNature.objects.all().order_by('nature')
-    print(naturedata)
 
     if today.month == 1:
         prev_month = 12
@@ -496,7 +494,6 @@ class dashchart(TemplateView):
 
 def chart_data(request):
     qs = Matters.objects.aggregate(Sum('id'))
-    print(qs)
     return JsonResponse({'msg':'hello world chart data view'})
 
 def reports(request):
