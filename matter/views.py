@@ -22,7 +22,7 @@ from django.contrib.auth.decorators import login_required
 @login_required
 def MatterList(request):
     matters = Matters.objects.all().order_by("-created_at")
-    form = EditMatterForm()
+    form = MatterForm()
 
     context = {
         'matters' : matters, 
@@ -291,14 +291,14 @@ def EditMatterNonIP(request,pk):
     image = IP_MatterImage.objects.filter(matter_id = pk)
 
     if request.method == 'POST':
-        form = EditMatterForm(request.POST, instance=matter)
+        form = MatterForm(request.POST, instance=matter)
         if form.is_valid():
             form.save()
             return redirect('select-matter', pk)
         else:
-            form = EditMatterForm(instance=matter)
+            form = MatterForm(instance=matter)
     else:
-        form = EditMatterForm(instance=matter)
+        form = MatterForm(instance=matter)
     
     context = {
         'form' : form,
@@ -310,64 +310,29 @@ def EditMatterNonIP(request,pk):
 
     return render(request, 'matter/edit_matter_nonip.html', context)   
 
-
 @login_required
-def EditMatter(request, pk):
-    matter = Matters.objects.get(id=pk)
-    activities = task_detail.objects.filter(matter_id = pk)
-    sid = matter.case_type.id
-    stype = CaseType.objects.get(id=sid)
-    apptype_id = matter.apptype.id
-    sapptype = AppType.objects.get(id=apptype_id)
-    image = IP_MatterImage.objects.filter(matter_id = pk)
-
-    if request.method == 'POST':
-        form = EditMatterForm(request.POST, request.FILES, instance=matter)
-        if form.is_valid():
-            form.save()
-            if sapptype.apptype == "NON-IP":
-                return redirect('edit-matter', matter.id)
-            else :
-                return redirect('edit-ipmatter', matter.id)
-            
-        else:
-            form = EditMatterForm(instance=matter)
-    else:
-        form = EditMatterForm(instance=matter)
-    
-    context = {
-        'form' : form,
-        'matter' : matter,
-        'sapptype' : sapptype, 
-        'activities' : activities,  
-        'image': image,    
-    }    
-
-    return render(request, 'matter/edit_matter.html', context)   
-
-@login_required
-def Edit_IPMatter(request, pk):
+def EditMatterTM(request, pk):
     def computeduedate():
         for duecode in duecodes:
             sdate = None
             if duecode.fieldbsis == 'Application Date':
-                sdate = ip_matter.application_date
+                sdate = matter.application_date
             if duecode.fieldbsis == 'Publication Date':
-                sdate = ip_matter.publication_date
+                sdate = matter.publication_date
             if duecode.fieldbsis == 'Registration Date':
-                sdate = ip_matter.registration_date
+                sdate = matter.registration_date
             if duecode.fieldbsis == 'Priority Date':
-                sdate = ip_matter.priority_date
+                sdate = matter.priority_date
             if duecode.fieldbsis == 'PCT Filing Date':
-                sdate = ip_matter.pct_appdate
+                sdate = matter.pct_appdate
             if duecode.fieldbsis == 'PCT Publication Date':
-                sdate = ip_matter.pct_pubdate
+                sdate = matter.pct_pubdate
             if duecode.fieldbsis == 'Renewal Date':
-                sdate = ip_matter.renewal_date
+                sdate = matter.renewal_date
             if duecode.fieldbsis == 'IR Date':
-                sdate = ip_matter.IR_date
+                sdate = matter.IR_date
             if duecode.fieldbsis == 'IR Renewal Date':
-                sdate = ip_matter.IR_renewalDate
+                sdate = matter.IR_renewalDate
             if sdate:
                 if duecode.basisofcompute == 'In Years':
                     nyears = int(duecode.terms)
@@ -384,46 +349,229 @@ def Edit_IPMatter(request, pk):
                     svalue = ("+"+str(ndays))
                     duedate = sdate + relativedelta(days=int(svalue))
                     
-                dues = AppDueDate.objects.filter(matter_id=ipmatter_rec.matter_id, duedate=duedate)
+                dues = AppDueDate.objects.filter(matter_id=matter.id, duedate=duedate)
                 if dues.exists():
                     pass
                 else:
-                    duedates = AppDueDate(matter_id=ipmatter_rec.matter_id, duedate=duedate, duecode_id = duecode.id, particulars=duecode.Description)
+                    duedates = AppDueDate(matter_id=matter.id, duedate=duedate, duecode_id = duecode.id, particulars=duecode.Description)
                     duedates.save()
 
     matter = Matters.objects.get(id=pk)
+    activities = task_detail.objects.filter(matter_id = pk)
+    sid = matter.case_type.id
+    stype = CaseType.objects.get(id=sid)
     apptype_id = matter.apptype.id
     sapptype = AppType.objects.get(id=apptype_id)
+    images = IP_MatterImage.objects.filter(matter_id = pk)
     duecodes = DueCode.objects.filter(apptype = sapptype)
-    try:
-        ip_matter = IP_Matter.objects.get(matter_id = pk)
-        sappdate = ip_matter.application_date
-    except IP_Matter.DoesNotExist:
-        ip_matter = None
 
-    apptype_id = matter.apptype.id
-    sapptype = AppType.objects.get(id=apptype_id)
+
     if request.method == 'POST':
-        form = Edit_IPTMMatterForm(request.POST, instance = ip_matter)
+        form = EditMatterFormTM(request.POST, request.FILES, instance=matter)
         if form.is_valid():
-            ipmatter_rec = form.save(commit=False)
-            ipmatter_rec.matter_id = request.POST['matter']
-            ipmatter_rec.save() 
+            form.save()
             computeduedate()
-            return redirect('select-matter', matter.id)
+            return redirect('select-matter', pk)
         else:
-            form = Edit_IPTMMatterForm(instance=ip_matter)
+            print("Sorry, invalid form please check")
+            form = EditMatterFormTM(instance=matter)
     else:
-        form = Edit_IPTMMatterForm(instance=ip_matter)
+        form = EditMatterFormTM(instance=matter)
     
     context = {
         'form' : form,
         'matter' : matter,
         'sapptype' : sapptype, 
-        'ip_matter' : ip_matter,      
+        'activities' : activities, 
+        'images': images, 
     }    
 
-    return render(request, 'matter/edit_ipmatter.html', context)   
+    return render(request, 'matter/edit_matter_TM.html', context)
+
+    # if sapptype.apptype.upper() == "TRADEMARK":
+    #     return render(request, 'matter/edit_matter_TM.html', context) 
+    # elif sapptype.apptype.upper() == "INVENTION" :
+    #     return render(request, 'matter/matter_detail_ip_INV.html', context)
+    # elif sapptype.apptype.upper() == "PCT" :
+    #     return render(request, 'matter/matter_detail_ip_INV.html', context)
+    # elif sapptype.apptype.upper() == "DESIGN" :
+    #     return render(request, 'matter/matter_detail_ip_DESIGN.html', context)
+    # elif sapptype.apptype.upper() == "UTILITY MODEL" :
+    #     return render(request, 'matter/matter_detail_ip_INV.html', context)
+    # else :
+    #     return render(request, 'matter/matter_detail_nonip.html', context)
+      
+@login_required
+def EditMatterINV(request, pk):
+    def computeduedate():
+        for duecode in duecodes:
+            sdate = None
+            if duecode.fieldbsis == 'Application Date':
+                sdate = matter.application_date
+            if duecode.fieldbsis == 'Publication Date':
+                sdate = matter.publication_date
+            if duecode.fieldbsis == 'Registration Date':
+                sdate = matter.registration_date
+            if duecode.fieldbsis == 'Priority Date':
+                sdate = matter.priority_date
+            if duecode.fieldbsis == 'PCT Filing Date':
+                sdate = matter.pct_appdate
+            if duecode.fieldbsis == 'PCT Publication Date':
+                sdate = matter.pct_pubdate
+            if duecode.fieldbsis == 'Renewal Date':
+                sdate = matter.renewal_date
+            if duecode.fieldbsis == 'IR Date':
+                sdate = matter.IR_date
+            if duecode.fieldbsis == 'IR Renewal Date':
+                sdate = matter.IR_renewalDate
+            if sdate:
+                if duecode.basisofcompute == 'In Years':
+                    nyears = int(duecode.terms)
+                    svalue = ("+"+str(nyears))
+                    duedate = sdate + relativedelta(years=int(svalue))
+
+                if duecode.basisofcompute == 'In Months':
+                    nmonth = int(duecode.terms)
+                    svalue = ("+"+str(nmonth))
+                    duedate = sdate + relativedelta(months=int(svalue))
+
+                if duecode.basisofcompute == 'In Days':
+                    ndays = int(duecode.terms)
+                    svalue = ("+"+str(ndays))
+                    duedate = sdate + relativedelta(days=int(svalue))
+                    
+                dues = AppDueDate.objects.filter(matter_id=matter.id, duedate=duedate)
+                if dues.exists():
+                    pass
+                else:
+                    duedates = AppDueDate(matter_id=matter.id, duedate=duedate, duecode_id = duecode.id, particulars=duecode.Description)
+                    duedates.save()
+
+    matter = Matters.objects.get(id=pk)
+    activities = task_detail.objects.filter(matter_id = pk)
+    sid = matter.case_type.id
+    stype = CaseType.objects.get(id=sid)
+    apptype_id = matter.apptype.id
+    sapptype = AppType.objects.get(id=apptype_id)
+    images = IP_MatterImage.objects.filter(matter_id = pk)
+    duecodes = DueCode.objects.filter(apptype = sapptype)
+
+
+    if request.method == 'POST':
+        form = EditMatterFormINV(request.POST, request.FILES, instance=matter)
+        if form.is_valid():
+            form.save()
+            computeduedate()
+
+            return redirect('select-matter', pk)
+        else:
+            print("Sorry, invalid form please check")
+            form = EditMatterFormINV(instance=matter)
+    else:
+        form = EditMatterFormINV(instance=matter)
+    
+    context = {
+        'form' : form,
+        'matter' : matter,
+        'sapptype' : sapptype, 
+        'activities' : activities, 
+        'images': images, 
+    }  
+    return render(request, 'matter/edit_matter_INV.html', context)  
+
+    # if sapptype.apptype.upper() == "TRADEMARK":
+    #     return render(request, 'matter/edit_matter_TM.html', context) 
+    # elif sapptype.apptype.upper() == "INVENTION" :
+    #     return render(request, 'matter/matter_detail_ip_INV.html', context)
+    # elif sapptype.apptype.upper() == "PCT" :
+    #     return render(request, 'matter/matter_detail_ip_INV.html', context)
+    # elif sapptype.apptype.upper() == "DESIGN" :
+    #     return render(request, 'matter/matter_detail_ip_DESIGN.html', context)
+    # elif sapptype.apptype.upper() == "UTILITY MODEL" :
+    #     return render(request, 'matter/matter_detail_ip_INV.html', context)
+    # else :
+    #     return render(request, 'matter/matter_detail_nonip.html', context)
+    
+
+# @login_required
+# def Edit_IPMatter(request, pk):
+#     def computeduedate():
+#         for duecode in duecodes:
+#             sdate = None
+#             if duecode.fieldbsis == 'Application Date':
+#                 sdate = ip_matter.application_date
+#             if duecode.fieldbsis == 'Publication Date':
+#                 sdate = ip_matter.publication_date
+#             if duecode.fieldbsis == 'Registration Date':
+#                 sdate = ip_matter.registration_date
+#             if duecode.fieldbsis == 'Priority Date':
+#                 sdate = ip_matter.priority_date
+#             if duecode.fieldbsis == 'PCT Filing Date':
+#                 sdate = ip_matter.pct_appdate
+#             if duecode.fieldbsis == 'PCT Publication Date':
+#                 sdate = ip_matter.pct_pubdate
+#             if duecode.fieldbsis == 'Renewal Date':
+#                 sdate = ip_matter.renewal_date
+#             if duecode.fieldbsis == 'IR Date':
+#                 sdate = ip_matter.IR_date
+#             if duecode.fieldbsis == 'IR Renewal Date':
+#                 sdate = ip_matter.IR_renewalDate
+#             if sdate:
+#                 if duecode.basisofcompute == 'In Years':
+#                     nyears = int(duecode.terms)
+#                     svalue = ("+"+str(nyears))
+#                     duedate = sdate + relativedelta(years=int(svalue))
+
+#                 if duecode.basisofcompute == 'In Months':
+#                     nmonth = int(duecode.terms)
+#                     svalue = ("+"+str(nmonth))
+#                     duedate = sdate + relativedelta(months=int(svalue))
+
+#                 if duecode.basisofcompute == 'In Days':
+#                     ndays = int(duecode.terms)
+#                     svalue = ("+"+str(ndays))
+#                     duedate = sdate + relativedelta(days=int(svalue))
+                    
+#                 dues = AppDueDate.objects.filter(matter_id=ipmatter_rec.matter_id, duedate=duedate)
+#                 if dues.exists():
+#                     pass
+#                 else:
+#                     duedates = AppDueDate(matter_id=ipmatter_rec.matter_id, duedate=duedate, duecode_id = duecode.id, particulars=duecode.Description)
+#                     duedates.save()
+
+#     matter = Matters.objects.get(id=pk)
+#     apptype_id = matter.apptype.id
+#     sapptype = AppType.objects.get(id=apptype_id)
+#     duecodes = DueCode.objects.filter(apptype = sapptype)
+#     try:
+#         ip_matter = IP_Matter.objects.get(matter_id = pk)
+#         sappdate = ip_matter.application_date
+#     except IP_Matter.DoesNotExist:
+#         ip_matter = None
+
+#     apptype_id = matter.apptype.id
+#     sapptype = AppType.objects.get(id=apptype_id)
+#     if request.method == 'POST':
+#         form = Edit_IPTMMatterForm(request.POST, instance = ip_matter)
+#         if form.is_valid():
+#             ipmatter_rec = form.save(commit=False)
+#             ipmatter_rec.matter_id = request.POST['matter']
+#             ipmatter_rec.save() 
+#             computeduedate()
+#             return redirect('select-matter', matter.id)
+#         else:
+#             form = Edit_IPTMMatterForm(instance=ip_matter)
+#     else:
+#         form = Edit_IPTMMatterForm(instance=ip_matter)
+    
+#     context = {
+#         'form' : form,
+#         'matter' : matter,
+#         'sapptype' : sapptype, 
+#         'ip_matter' : ip_matter,      
+#     }    
+
+#     return render(request, 'matter/edit_ipmatter.html', context)   
 
 @login_required
 def EditDueDate(request, pk, mid):

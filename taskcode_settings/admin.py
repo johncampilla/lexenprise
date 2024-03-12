@@ -5,3 +5,4 @@ from . models import *
 admin.site.register(ActivityCodes)
 admin.site.register(DueCode)
 admin.site.register(FilingFeeCodes)
+admin.site.register(FieldItems)

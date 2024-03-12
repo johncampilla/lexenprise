@@ -8,10 +8,12 @@ from django.forms.widgets import NumberInput, TextInput, Textarea, Widget
 class MatterForm(forms.ModelForm):
     class Meta:
         model = Matters
-        fields = ('matter_title', 'appearance', 'matter_contact_person', 'handling_lawyer','opposing_counsel', 'apptype', 'clientrefno', 'referenceno', 'filing_date', 'matterno', 'case_type', 'filed_at', 'nature', 'lawyers_involve', 'remarks', 'stage_group')
+        fields = '__all__'
+#        ('matter_title', 'appearance', 'matter_contact_person', 'handling_lawyer','opposing_counsel', 'apptype', 'clientrefno', 'referenceno', 'filing_date', 'matterno', 'case_type', 'filed_at', 'nature', 'lawyers_involve', 'remarks', 'stage_group')
         required = ('matter_title','handling_lawyer','apptype', 'case_type')
         widgets = {
-#            'folder': forms.Select(attrs={'class': 'form-control', 'cols': 200, 'rows': 2}),
+            'folder': forms.Select(attrs={'class': 'form-control', 'cols': 200, 'rows': 2}),
+            'matter_id' : forms.TextInput(attrs={'class': 'form-control'}),
             'matter_title': forms.Textarea(attrs={'class': 'form-control', 'cols': 200, 'rows': 2}),
             'appearance': forms.Select(attrs={'class': 'form-control', 'cols': 200, 'rows': 2}),
             'matter_contact_person': forms.Select(attrs={'class': 'form-control', 'cols': 200, 'rows': 2}),
@@ -30,29 +32,103 @@ class MatterForm(forms.ModelForm):
             'stage_group': forms.Select(attrs={'class': 'form-control', 'cols': 200, 'rows': 2}),
         }
 
-class EditMatterForm(forms.ModelForm):
+class EditMatterFormTM(forms.ModelForm):
     class Meta:
         model = Matters
-        fields = 'folder','matter_title', 'appearance', 'matter_contact_person', 'handling_lawyer','opposing_counsel', 'status', 'apptype', 'clientrefno', 'referenceno', 'filing_date', 'matterno', 'case_type', 'filed_at', 'nature', 'lawyers_involve', 'remarks', 'stage_group','TM_Image'
+        fields = 'matter_id', 'referenceno','clientrefno','matterno', 'filing_date','filed_at','case_type','apptype','nature','matter_title','status','appearance','handling_lawyer','matter_contact_person','lawyers_involve','opposing_counsel','ipc_appno','ipc_appdate','publication_reference','publication_date','translation','claim_of_color','disclaimer','type_of_mark','reason_withdrawn','date_of_Withdrawn','IR_date','IR_renewalDate','IR_subsequentDate','nice_class','renewal_date','application_no','application_date','certificate_no','registration_date','stage_group','TM_Image'
         widgets = {
-            'folder': forms.Select(attrs={'class': 'form-control', 'cols': 200, 'rows': 2}),
-            'matter_title': forms.Textarea(attrs={'class': 'form-control', 'cols': 200, 'rows': 2}),
-            'appearance': forms.Select(attrs={'class': 'form-control', 'cols': 200, 'rows': 2}),
-            'matter_contact_person': forms.Select(attrs={'class': 'form-control', 'cols': 200, 'rows': 2}),
-            'handling_lawyer': forms.Select(attrs={'class': 'form-control', 'cols': 200, 'rows': 2}),
-            'opposing_counsel': forms.TextInput(attrs={'class': 'form-control'}),
-            'status': forms.Select(attrs={'class': 'form-control', 'cols': 200, 'rows': 2}),
-            'apptype': forms.Select(attrs={'class': 'form-control', 'cols': 200, 'rows': 2}),
-            'clientrefno': forms.TextInput(attrs={'class': 'form-control'}),
+            'matter_id' : forms.TextInput(attrs={'class': 'form-control'}),
             'referenceno': forms.TextInput(attrs={'class': 'form-control'}),
-            'filing_date': NumberInput(attrs={'type': 'date','class':'form-control'}),
+            'clientrefno': forms.TextInput(attrs={'class': 'form-control'}),
             'matterno': forms.TextInput(attrs={'class': 'form-control'}),
-            'case_type': forms.Select(attrs={'class': 'form-control', 'cols': 200, 'rows': 2}),
+            'filing_date': NumberInput(attrs={'type': 'date','class':'form-control'}),
             'filed_at': forms.Select(attrs={'class': 'form-control', 'cols': 200, 'rows': 2}),
+            'case_type': forms.Select(attrs={'class': 'form-control', 'cols': 200, 'rows': 2}),
+            'apptype': forms.Select(attrs={'class': 'form-control', 'cols': 200, 'rows': 2}),
             'nature': forms.Select(attrs={'class': 'form-control', 'cols': 200, 'rows': 2}),
+            'matter_title': forms.Textarea(attrs={'class': 'form-control', 'cols': 200, 'rows': 2}),
+            'status': forms.Select(attrs={'class': 'form-control', 'cols': 200, 'rows': 2}),
+            'appearance': forms.Select(attrs={'class': 'form-control', 'cols': 200, 'rows': 2}),
+            'handling_lawyer': forms.Select(attrs={'class': 'form-control', 'cols': 200, 'rows': 2}),
+            'matter_contact_person': forms.Select(attrs={'class': 'form-control', 'cols': 200, 'rows': 2}),
             'lawyers_involve': forms.TextInput(attrs={'class': 'form-control'}),
+            'opposing_counsel': forms.TextInput(attrs={'class': 'form-control'}),
             'remarks': forms.Textarea(attrs={'class': 'form-control', 'cols': 200, 'rows': 2}),
             'stage_group': forms.Select(attrs={'class': 'form-control', 'cols': 200, 'rows': 2}),
+            'ipo_examiner' : forms.TextInput(attrs={'class': 'form-control'}),
+            'application_no': forms.TextInput(attrs={'class': 'form-control'}),
+            'application_date': NumberInput(attrs={'type': 'date','class':'form-control'}),
+            'certificate_no': forms.TextInput(attrs={'class': 'form-control'}),
+            'registration_date': NumberInput(attrs={'type': 'date','class':'form-control'}),
+            'ipc_appno': forms.TextInput(attrs={'class': 'form-control'}),
+            'ipc_appdate': NumberInput(attrs={'type': 'date','class':'form-control'}),
+            'publication_reference': forms.TextInput(attrs={'class': 'form-control'}),
+            'publication_date': NumberInput(attrs={'type': 'date','class':'form-control'}),
+            'translation': forms.TextInput(attrs={'class': 'form-control'}),
+            'claim_of_color': forms.TextInput(attrs={'class': 'form-control'}),
+            'disclaimer': forms.TextInput(attrs={'class': 'form-control'}),
+            'type_of_mark': forms.Select(attrs={'class': 'form-control', 'cols': 200, 'rows': 2}),
+            'reason_withdrawn': forms.TextInput(attrs={'class': 'form-control'}),
+            'date_of_Withdrawn': NumberInput(attrs={'type': 'date','class':'form-control'}),
+            'IR_date': NumberInput(attrs={'type': 'date','class':'form-control'}),
+            'IR_renewalDate': NumberInput(attrs={'type': 'date','class':'form-control'}),
+            'IR_subsequentDate': NumberInput(attrs={'type': 'date','class':'form-control'}),
+            'nice_class' : forms.TextInput(attrs={'class': 'form-control'}),
+            'renewal_date': NumberInput(attrs={'type': 'date','class':'form-control'}),
+        }
+
+class EditMatterFormINV(forms.ModelForm):
+    class Meta:
+        model = Matters
+        fields = 'matter_id', 'referenceno','clientrefno','matterno', 'lng_interappln','lng_interpubln','pct_publication','pct_pubdate','parent_appno','parent_appdate','pct_appno','pct_appdate','filing_date','filed_at','case_type','apptype','nature','matter_title','status','appearance','handling_lawyer','matter_contact_person','lawyers_involve','opposing_counsel','ipc_appno','ipc_appdate','publication_reference','publication_date','translation','claim_of_color','disclaimer','type_of_mark','reason_withdrawn','date_of_Withdrawn','IR_date','IR_renewalDate','IR_subsequentDate','nice_class','renewal_date','application_no','application_date','certificate_no','registration_date','stage_group','TM_Image'
+        widgets = {
+            'parent_appno' : forms.TextInput(attrs={'class': 'form-control'}),
+            'parent_appdate' : NumberInput(attrs={'type': 'date','class':'form-control'}),
+            'pct_appno' : forms.TextInput(attrs={'class': 'form-control'}),
+            'pct_appdate' : NumberInput(attrs={'type': 'date','class':'form-control'}),
+            'pct_publication' : forms.TextInput(attrs={'class': 'form-control'}),
+            'pct_pubdate': NumberInput(attrs={'type': 'date','class':'form-control'}),
+            'lng_interappln' : forms.TextInput(attrs={'class': 'form-control'}),
+            'lng_interpubln' : forms.TextInput(attrs={'class': 'form-control'}),
+
+            'matter_id' : forms.TextInput(attrs={'class': 'form-control'}),
+            'referenceno': forms.TextInput(attrs={'class': 'form-control'}),
+            'clientrefno': forms.TextInput(attrs={'class': 'form-control'}),
+            'matterno': forms.TextInput(attrs={'class': 'form-control'}),
+            'filing_date': NumberInput(attrs={'type': 'date','class':'form-control'}),
+            'filed_at': forms.Select(attrs={'class': 'form-control', 'cols': 200, 'rows': 2}),
+            'case_type': forms.Select(attrs={'class': 'form-control', 'cols': 200, 'rows': 2}),
+            'apptype': forms.Select(attrs={'class': 'form-control', 'cols': 200, 'rows': 2}),
+            'nature': forms.Select(attrs={'class': 'form-control', 'cols': 200, 'rows': 2}),
+            'matter_title': forms.Textarea(attrs={'class': 'form-control', 'cols': 200, 'rows': 2}),
+            'status': forms.Select(attrs={'class': 'form-control', 'cols': 200, 'rows': 2}),
+            'appearance': forms.Select(attrs={'class': 'form-control', 'cols': 200, 'rows': 2}),
+            'handling_lawyer': forms.Select(attrs={'class': 'form-control', 'cols': 200, 'rows': 2}),
+            'matter_contact_person': forms.Select(attrs={'class': 'form-control', 'cols': 200, 'rows': 2}),
+            'lawyers_involve': forms.TextInput(attrs={'class': 'form-control'}),
+            'opposing_counsel': forms.TextInput(attrs={'class': 'form-control'}),
+            'remarks': forms.Textarea(attrs={'class': 'form-control', 'cols': 200, 'rows': 2}),
+            'stage_group': forms.Select(attrs={'class': 'form-control', 'cols': 200, 'rows': 2}),
+            'ipo_examiner' : forms.TextInput(attrs={'class': 'form-control'}),
+            'application_no': forms.TextInput(attrs={'class': 'form-control'}),
+            'application_date': NumberInput(attrs={'type': 'date','class':'form-control'}),
+            'certificate_no': forms.TextInput(attrs={'class': 'form-control'}),
+            'registration_date': NumberInput(attrs={'type': 'date','class':'form-control'}),
+            'ipc_appno': forms.TextInput(attrs={'class': 'form-control'}),
+            'ipc_appdate': NumberInput(attrs={'type': 'date','class':'form-control'}),
+            'publication_reference': forms.TextInput(attrs={'class': 'form-control'}),
+            'publication_date': NumberInput(attrs={'type': 'date','class':'form-control'}),
+            'translation': forms.TextInput(attrs={'class': 'form-control'}),
+            'claim_of_color': forms.TextInput(attrs={'class': 'form-control'}),
+            'disclaimer': forms.TextInput(attrs={'class': 'form-control'}),
+            'type_of_mark': forms.Select(attrs={'class': 'form-control', 'cols': 200, 'rows': 2}),
+            'reason_withdrawn': forms.TextInput(attrs={'class': 'form-control'}),
+            'date_of_Withdrawn': NumberInput(attrs={'type': 'date','class':'form-control'}),
+            'IR_date': NumberInput(attrs={'type': 'date','class':'form-control'}),
+            'IR_renewalDate': NumberInput(attrs={'type': 'date','class':'form-control'}),
+            'IR_subsequentDate': NumberInput(attrs={'type': 'date','class':'form-control'}),
+            'nice_class' : forms.TextInput(attrs={'class': 'form-control'}),
+            'renewal_date': NumberInput(attrs={'type': 'date','class':'form-control'}),
         }
 
 class PriorityForm(forms.ModelForm):

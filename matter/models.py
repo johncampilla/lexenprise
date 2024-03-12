@@ -14,7 +14,25 @@ from datetime import timedelta
 from dateutil.relativedelta import relativedelta
 
 # Create your models here.
+
+STATUS = (
+        ('PENDING', 'PENDING'),
+        ('REGISTERED', 'REGISTERED'),
+        ('CANCELLED', 'CANCELLED'),
+        ('ABANDONED', 'ABANDONED'),
+        ('RENEWAL', 'RENEWAL'),
+        ('TRANSFERRED', 'TRANSFERRED'),
+    )
+TYPEOFMARK = (
+        ('Word Mark','Word Mark'),
+        ('Figurative Mark','Figurative Mark'),
+        ('Figurative w/ Word Mark','Figurative w/ Word Mark'),
+        ('Three-dimensional','Three-dimensional'),
+        ('Collective Mark','Collective Mark'),
+    )
+
 class Matters(models.Model):
+
     folder = models.ForeignKey(CaseFolder, on_delete=models.CASCADE, null=True, related_name='matters')
     matter_id = models.CharField(max_length=24, blank=True)
     referenceno = models.CharField(max_length=30, blank=True)
@@ -37,6 +55,49 @@ class Matters(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
     TM_Image = models.ImageField(upload_to="TM_IMAGE/", blank=True, null=True)
+#   added from IPMatter
+#    apptype = models.ForeignKey(AppType, on_delete=models.CASCADE, blank=True, null=True)
+    ipo_examiner = models.CharField(max_length=100, blank=True)
+#    status = models.CharField(max_length=20, choices=STATUS, null=True, blank=True)
+    #divisional
+    parent_appno = models.CharField(max_length=30, blank=True)
+    parent_appdate = models.DateField(null=True, blank=True)
+    #local filings
+    application_no = models.CharField(max_length=30, blank=True)
+    application_date = models.DateField(null=True, blank=True)
+    certificate_no = models.CharField(max_length=30, blank=True)
+    registration_date = models.DateField(null=True, blank=True)
+    ipc_appno = models.CharField(max_length=25, blank=True)
+    ipc_appdate = models.DateField(null=True, blank=True)
+    publication_reference = models.CharField(max_length=30, blank=True)
+    publication_date = models.DateField(null=True, blank=True)
+    #applies for all patents
+    priority_number = models.CharField(max_length=25, blank=True)
+    priority_date = models.DateField(null=True, blank=True)
+    priority_country_filing = models.CharField(max_length=30, blank=True)
+    #PCT Information
+    pct_appno = models.CharField(max_length=30, blank=True)
+    pct_appdate = models.DateField(null=True, blank=True)
+    pct_publication = models.CharField(max_length=30, blank=True)
+    pct_pubdate = models.DateField(null=True, blank=True)
+    lng_interappln = models.CharField(max_length=30, blank=True)
+    lng_interpubln = models.CharField(max_length=30, blank=True)
+    #trademark
+    claim_of_color = models.CharField(max_length=30, blank=True)
+
+    translation = models.CharField(max_length=60, blank=True)
+    disclaimer = models.CharField(max_length=100, blank=True)
+    type_of_mark = models.CharField(max_length=30, blank=True, choices=TYPEOFMARK)
+    reason_withdrawn = models.CharField(max_length=200, blank=True)
+    date_of_Withdrawn = models.DateField(null=True, blank=True)
+    date_Of_PCTPriority = models.DateField(null=True, blank=True)
+    copyright_number = models.CharField(max_length=30, blank=True)
+    IR_date = models.DateField(null=True, blank=True)
+    IR_renewalDate = models.DateField(null=True, blank=True)
+    IR_subsequentDate = models.DateField(null=True, blank=True)
+    nice_class = models.CharField(max_length=60, blank=True, null=True)
+    renewal_date = models.DateField(null=True, blank=True)
+
 
 
     def __str__(self):
@@ -77,6 +138,7 @@ YESNO = (
     ('Y','Yes'),
     ('N','No'),
 )
+
 
 
 class Applicant(models.Model):

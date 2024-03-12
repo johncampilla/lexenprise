@@ -50,6 +50,11 @@ class FilingFeeCodes(models.Model):
     def __str__(self):
         return f"{self.ActivityCode} - {self.fee_description}"
 
+class FieldItems(models.Model):
+    fieldnames = models.CharField(max_length=50, blank=True, null=True)
+
+    def __str__(self):
+        return self.fieldnames
 
 
 class DueCode(models.Model):

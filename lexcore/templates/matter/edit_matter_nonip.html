@@ -1,4 +1,8 @@
 {% extends 'layout/base.html' %}
+{% block title %}
+Non-IP Details
+{% endblock %}
+
 {% block content %}
 <div class="d-flex">
     {% include 'layout/sidebar.html' %}
@@ -14,8 +18,8 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="input-group input-group-sm mb-1">
-                                <span class="input-group-text" style="width: 113px;">Case Folder</span>
-                                {{form.folder}}
+                                <span class="input-group-text" style="width: 113px;">Matter ID</span>
+                                {{form.matter_id}}
                             </div>
                         </div>
                         <div class="input-group input-group-sm mb-1">
