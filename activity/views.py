@@ -143,6 +143,37 @@ def viewattachdocument(request, pk):
     # return render(request, 'matter/viewactivitydocs.html', context)
     return render(request, 'activity/newactivitydocs.html', context)   
 
+@login_required
+def selectdocument(request, pk):
+    docs = FilingDocs.objects.get(id=pk) 
+    task = task_detail.objects.get(id = docs.task_detail_id) 
+    print(task)
+    matter = Matters.objects.get(id = docs.task_detail.matter_id)
+    user_name = request.user.username
+    print(matter)
+    form = filingdocforms(instance=docs)
+    if request.method == "POST":
+        form = filingdocforms(request.POST, request.FILES, instance=docs)
+        if form.is_valid():
+            document_rec = form.save(commit=False)
+            document_rec.task_detail_id = task.id
+            document_rec.updatedby = user_name
+            document_rec.save()            
+            return redirect('view-activity', task.id, matter.id)
+        else:
+            form = filingdocforms(instance=docs)
+    else:
+        form = filingdocforms(instance=docs)
+
+    context = {
+        'docs':docs,
+        'matter':matter,
+        'form' : form,
+        'task' : task
+    }
+    # return render(request, 'matter/viewactivitydocs.html', context)
+    return render(request, 'activity/selectdocs.html', context)   
+
 
 @login_required
 def RemoveActivity(request, pk):

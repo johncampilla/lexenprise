@@ -22,7 +22,7 @@ from django.contrib.auth.decorators import login_required
 @login_required
 def MatterList(request):
     matters = Matters.objects.all().order_by("-created_at")
-    form = MatterForm()
+    form = EditMatterForm()
 
     context = {
         'matters' : matters, 

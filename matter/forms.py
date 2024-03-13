@@ -32,6 +32,31 @@ class MatterForm(forms.ModelForm):
             'stage_group': forms.Select(attrs={'class': 'form-control', 'cols': 200, 'rows': 2}),
         }
 
+class EditMatterForm(forms.ModelForm):
+    class Meta:
+        model = Matters
+        fields = 'folder','matter_title', 'appearance', 'matter_contact_person', 'handling_lawyer','opposing_counsel', 'status', 'apptype', 'clientrefno', 'referenceno', 'filing_date', 'matterno', 'case_type', 'filed_at', 'nature', 'lawyers_involve', 'remarks', 'stage_group','TM_Image'
+        widgets = {
+            'folder': forms.Select(attrs={'class': 'form-control', 'cols': 200, 'rows': 2}),
+            'matter_title': forms.Textarea(attrs={'class': 'form-control', 'cols': 200, 'rows': 2}),
+            'appearance': forms.Select(attrs={'class': 'form-control', 'cols': 200, 'rows': 2}),
+            'matter_contact_person': forms.Select(attrs={'class': 'form-control', 'cols': 200, 'rows': 2}),
+            'handling_lawyer': forms.Select(attrs={'class': 'form-control', 'cols': 200, 'rows': 2}),
+            'opposing_counsel': forms.TextInput(attrs={'class': 'form-control'}),
+            'status': forms.Select(attrs={'class': 'form-control', 'cols': 200, 'rows': 2}),
+            'apptype': forms.Select(attrs={'class': 'form-control', 'cols': 200, 'rows': 2}),
+            'clientrefno': forms.TextInput(attrs={'class': 'form-control'}),
+            'referenceno': forms.TextInput(attrs={'class': 'form-control'}),
+            'filing_date': NumberInput(attrs={'type': 'date','class':'form-control'}),
+            'matterno': forms.TextInput(attrs={'class': 'form-control'}),
+            'case_type': forms.Select(attrs={'class': 'form-control', 'cols': 200, 'rows': 2}),
+            'filed_at': forms.Select(attrs={'class': 'form-control', 'cols': 200, 'rows': 2}),
+            'nature': forms.Select(attrs={'class': 'form-control', 'cols': 200, 'rows': 2}),
+            'lawyers_involve': forms.TextInput(attrs={'class': 'form-control'}),
+            'remarks': forms.Textarea(attrs={'class': 'form-control', 'cols': 200, 'rows': 2}),
+            'stage_group': forms.Select(attrs={'class': 'form-control', 'cols': 200, 'rows': 2}),
+        }
+
 class EditMatterFormTM(forms.ModelForm):
     class Meta:
         model = Matters

@@ -10,6 +10,7 @@ urlpatterns = [
     #2/21/2023
     path("activity/viewactivity/<int:pk>/<int:mid>/'", views.ViewActivity, name='view-activity'),
     path("activity/viewattachdocs/<int:pk>/'", views.viewattachdocument,  name='view-attach'),
+    path("activity/selectdocs/<int:pk>/'", views.selectdocument,  name='select-doc'),
     path("activity/attachdocs/<int:pk>/'", views.AttachDocument, name='attachdocument'),
     path("activity/removeattach/<int:pk>/<int:mid>/'", views.RemoveAttachDocument, name='remove-attachdocument'),
 

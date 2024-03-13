@@ -293,7 +293,7 @@ Reference
                     <a class="btn btn-secondary btn-sm" href="{% url 'new-duecode' %}" title="Add Task Code"><i
                             class="fa fa-plus"></i></a>
                     <!-- Button trigger modal -->
-                    <table class="table-hover table-bordered table-sm small table">
+                    <table class="table-hover table-bordered table-sm small table" id="lookduecode">
                         <thead class="table-primary text-center">
                             <tr>
                                 <th scope="col" style="width:3%;">#</th>
@@ -304,7 +304,7 @@ Reference
                                 <th scope="col" style="width:10%;">Field Basis</th>
                                 <th scope="col" style="width:10%;">Basis Of Compute</th>
                                 <th scope="col" style="width:5%;">Terms</th>
-                                <th colspan="2" style="width:5%;">Action</th>
+                                <th scope="col" style="width:5%;">Action</th>
 
                             </tr>
                         </thead>
@@ -322,9 +322,9 @@ Reference
                                 <td><a class="btn btn-secondary btn-sm" href="{% url 'edit-duecode' due.id %}"
                                         title="Edit Task Code"><i class="fas fa-edit"></i></a>
                                 </td>
-                                <td><a class="btn btn-secondary btn-sm" href="{% url 'remove-duecode' due.id %}"
+                                {% comment %} <td><a class="btn btn-secondary btn-sm" href="{% url 'remove-duecode' due.id %}"
                                         title="Delete Code"><i class="fas fa-trash-alt"></i></a>
-                                </td>
+                                </td> {% endcomment %}
 
                             </tr>
                             {% endfor %}

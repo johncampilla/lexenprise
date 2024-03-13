@@ -55,42 +55,43 @@
                                 </div>
                             </div>
                             <!-- <button type="submit" class="btn btn-primary mb-3">Save Record</button> -->
-                            <a class='btn btn-success' href="{% url 'reference-index' %}">Return</a>
-                            <input class='btn btn-success' type="submit" value="Save">
                         </div>
+                        <div class="card mt-1 mb-2">
+                            <table class="table-hover table-bordered table-sm small table">
+                                <thead class="table-primary text-center">
+                                    <tr>
+                                        <th scope="col" style="width:2%;">#</th>
+                                        <th scope="col" style="width:70%;">Filing Fee Description</th>
+                                        <th scope="col" style="width:10%;">Amount (USD)</th>
+                                        <th scope="col" style="width:10%;">Amount (PhP)</th>
+                                        <th colspan="2" style="width:5%;">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for fee in fees %}
+                                    <tr>
+                                        <td>{{ forloop.counter }}</td>
+                                        <td>{{ fee.fee_description }}</td>
+                                        <td>{{ fee.amount }}</td>
+                                        <td>{{ fee.pesoamount }}</td>
+                                        <td><a class="btn btn-secondary btn-sm" href="#" title="Modify"><i
+                                                    class="fas fa-edit"></i></a>
+                                        </td>
+
+                                        <td><a class="btn btn-secondary btn-sm" href="#" title="Delete"><i
+                                                    class="fas fa-trash-alt"></i></a>
+                                        </td>
+
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+
+                        </div>
+                        <a class='btn btn-success' href="{% url 'reference-index' %}">Return</a>
+                        <input class='btn btn-success' type="submit" value="Save and add Filing Fee">
+
                     </form>
-                    <div class="card mt-1">
-                        <table class="table-hover table-bordered table-sm small table">
-                            <thead class="table-primary text-center">
-                                <tr>
-                                    <th scope="col" style="width:2%;">#</th>
-                                    <th scope="col" style="width:70%;">Fee Description</th>
-                                    <th scope="col" style="width:10%;">Amount (USD)</th>
-                                    <th scope="col" style="width:10%;">Amount (PhP)</th>
-                                    <th colspan="2" style="width:5%;">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for fee in fees %}
-                                <tr>
-                                    <td>{{ forloop.counter }}</td>
-                                    <td>{{ fee.fee_description }}</td>
-                                    <td>{{ fee.amount }}</td>
-                                    <td>{{ fee.pesoamount }}</td>
-                                    <td><a class="btn btn-secondary btn-sm" href="#" title="Modify"><i
-                                                class="fas fa-edit"></i></a>
-                                    </td>
-
-                                    <td><a class="btn btn-secondary btn-sm" href="#" title="Delete"><i
-                                                class="fas fa-trash-alt"></i></a>
-                                    </td>
-
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-
-                    </div>
 
                 </div>
             </div>

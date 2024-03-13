@@ -95,4 +95,4 @@ class DueCode(models.Model):
         null=True, blank=True, max_digits=5, decimal_places=3)
 
     def __str__(self):
-        return f'{self.Description} - {self.basisofcompute} for {self.terms} - {self.apptype.apptype}'
+        return f'{self.Description} - {self.apptype.apptype}'
