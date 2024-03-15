@@ -37,6 +37,7 @@ urlpatterns = [
     path('', include('docutemplates.urls')),
     path('', include('chatter.urls')),
     path('', include('searchengine.urls')),
+    path('', include('dataconversion.urls')),
 
 ] 
 #if settings.DEBUG:
