@@ -38,6 +38,7 @@ urlpatterns = [
     path('', include('chatter.urls')),
     path('', include('searchengine.urls')),
     path('', include('dataconversion.urls')),
+    path('', include('tmwatch.urls')),
 
 ] 
 #if settings.DEBUG:

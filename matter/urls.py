@@ -8,6 +8,7 @@ urlpatterns = [
     path('matter/newmatter/', views.NewMatter, name='new-matter'),
     path("matter/editmatterTM/<int:pk>'",views.EditMatterTM, name ='edit-matter'),
     path("matter/editmatterpatent/<int:pk>'",views.EditMatterINV, name ='edit-matter-patent'),
+    path("matter/editmatterdesign/<int:pk>'",views.EditMatterDS, name ='edit-matter-design'),
 
     path("matter/editmatternonip/<int:pk>'",views.EditMatterNonIP, name ='edit-matter-nonip'),
     

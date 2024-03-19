@@ -333,6 +333,8 @@ def EditMatterTM(request, pk):
                 sdate = matter.IR_date
             if duecode.fieldbsis == 'IR Renewal Date':
                 sdate = matter.IR_renewalDate
+            if duecode.fieldbsis == 'IR_subsequentDate':
+                sdate = matter.IR_subsequentDate
             if sdate:
                 if duecode.basisofcompute == 'In Years':
                     nyears = int(duecode.terms)
@@ -401,6 +403,83 @@ def EditMatterTM(request, pk):
     # else :
     #     return render(request, 'matter/matter_detail_nonip.html', context)
       
+def EditMatterDS(request, pk):
+    def computeduedate():
+        for duecode in duecodes:
+            sdate = None
+            if duecode.fieldbsis == 'Application Date':
+                sdate = matter.application_date
+            if duecode.fieldbsis == 'Publication Date':
+                sdate = matter.publication_date
+            if duecode.fieldbsis == 'Registration Date':
+                sdate = matter.registration_date
+            if duecode.fieldbsis == 'Priority Date':
+                sdate = matter.priority_date
+            if duecode.fieldbsis == 'PCT Filing Date':
+                sdate = matter.pct_appdate
+            if duecode.fieldbsis == 'PCT Publication Date':
+                sdate = matter.pct_pubdate
+            if duecode.fieldbsis == 'Renewal Date':
+                sdate = matter.renewal_date
+            if duecode.fieldbsis == 'IR Date':
+                sdate = matter.IR_date
+            if duecode.fieldbsis == 'IR Renewal Date':
+                sdate = matter.IR_renewalDate
+            if sdate:
+                if duecode.basisofcompute == 'In Years':
+                    nyears = int(duecode.terms)
+                    svalue = ("+"+str(nyears))
+                    duedate = sdate + relativedelta(years=int(svalue))
+
+                if duecode.basisofcompute == 'In Months':
+                    nmonth = int(duecode.terms)
+                    svalue = ("+"+str(nmonth))
+                    duedate = sdate + relativedelta(months=int(svalue))
+
+                if duecode.basisofcompute == 'In Days':
+                    ndays = int(duecode.terms)
+                    svalue = ("+"+str(ndays))
+                    duedate = sdate + relativedelta(days=int(svalue))
+                    
+                dues = AppDueDate.objects.filter(matter_id=matter.id, duedate=duedate)
+                if dues.exists():
+                    pass
+                else:
+                    duedates = AppDueDate(matter_id=matter.id, duedate=duedate, duecode_id = duecode.id, particulars=duecode.Description)
+                    duedates.save()
+
+    matter = Matters.objects.get(id=pk)
+    activities = task_detail.objects.filter(matter_id = pk)
+    sid = matter.case_type.id
+    stype = CaseType.objects.get(id=sid)
+    apptype_id = matter.apptype.id
+    sapptype = AppType.objects.get(id=apptype_id)
+    images = IP_MatterImage.objects.filter(matter_id = pk)
+    duecodes = DueCode.objects.filter(apptype = sapptype)
+
+
+    if request.method == 'POST':
+        form = EditMatterFormINV(request.POST, request.FILES, instance=matter)
+        if form.is_valid():
+            form.save()
+            computeduedate()
+
+            return redirect('select-matter', pk)
+        else:
+            print("Sorry, invalid form please check")
+            form = EditMatterFormINV(instance=matter)
+    else:
+        form = EditMatterFormINV(instance=matter)
+    
+    context = {
+        'form' : form,
+        'matter' : matter,
+        'sapptype' : sapptype, 
+        'activities' : activities, 
+        'images': images, 
+    }  
+    return render(request, 'matter/edit_matter_DES.html', context)  
+
 @login_required
 def EditMatterINV(request, pk):
     def computeduedate():

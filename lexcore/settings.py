@@ -61,6 +61,7 @@ INSTALLED_APPS = [
     'chatter',
     'easyaudit',
     'dataconversion',
+    'import_export',
 
 ]
 

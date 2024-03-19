@@ -74,6 +74,7 @@ class DueCode(models.Model):
         ('Renewal Date', 'Renewal Date'),
         ('IR Date', 'IR Date'),
         ('IR Renewal Date', 'IR Renewal Date'),
+        ('IR_subsequentDate', 'IR_subsequentDate'),
         ('Document Date', 'Document Date'),
         ('Document Receipt Date', 'Document Receipt Date'),
         ('OA Mailing Date', 'OA Mailing Date'),
