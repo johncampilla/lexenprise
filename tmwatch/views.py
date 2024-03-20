@@ -6,6 +6,7 @@ from dataconversion.models import egazette
 def gazettelist(request):
     publications = egazette.objects.all()
 
+
     context = {
         'gazette' : publications,
     }

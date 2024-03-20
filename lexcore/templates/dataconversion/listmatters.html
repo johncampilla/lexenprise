@@ -1,0 +1,55 @@
+{% extends 'layout/base.html' %}
+{% block title %}
+Data Migration - Matters
+{% endblock title %}
+
+{% block content %}
+<div class="d-flex">
+    {% include 'layout/sidebar.html' %}
+    <div class="w-100">
+        {% include 'layout/header.html' %}
+        <div class="my-3 mx-3">
+            {% include 'layout/subheader.html' %}            
+            <div class="card">
+                <div class="card-header text-center mb-2" style=" color: black; background-color:rgb(228, 248, 188);">
+                    <a class="<i class="fas fa-plus"></i></a>
+                    <b>Matters</b>
+                </div>
+                <table class="table-hover table-bordered table-sm small table" id="csv_matterlist">
+                    <thead class="table-primary text-center">
+                        <tr>
+                            <th scope="col" style="width:3%;">#</th>
+                            <th scope="col" style="width:15%;">Client Number</th>
+                            <th scope="col" style="width:10%;">Account #</th>
+                            <th scope="col" style="width:15%;">Matter Title</th>
+                            <th scope="col" style="width:10%;">Applicant</th>
+                            <th scope="col" style="width:8%;">Application #</th>
+                            <th scope="col" style="width:30%;">File Date</th>
+                            <th scope="col" style="width:5%;">Handling Lawyer</th>
+                            <th scope="col" style="width:5%;">Select</th>
+
+                        </tr>
+                    </thead>
+                    {% for matter in matters %}
+                    <tr>
+                        <td>{{forloop.counter}}</td>
+                        <td>{{ matter.Client_Number }}</td>
+                        <td>{{ matter.ApplicationNo }}</td>
+                        <td>{{ matter.Case1 }}</td>
+                        <td>{{ matter.Applicant }}</td>
+                        <td>{{ matter.PatAppNo }}</td>
+                        <td>{{ matter.ApplicationDate }}</td>
+                        <td>{{ matter.HandlingOfficer }}</td>
+                        <td style="text-align: center;"><a class="btn btn-secondary btn-sm"
+                                href="#" title="Select"><i
+                                    class="far fa-hand-pointer"></i></a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+
+                </table>
+            </div>            
+        </div>
+    </div>
+</div>
+{% endblock content %}

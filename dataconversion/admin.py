@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Csv, csv_client, egazette, csv_matter
+from .models import Csv, csv_client, egazette, csv_matter, csv_task
 from import_export.admin import ImportExportModelAdmin 
 
 
@@ -15,10 +15,13 @@ class csv_Admin(ImportExportModelAdmin):
 class csv_egazette_Admin(ImportExportModelAdmin):
     list_display = ['Application_Number', 'Filing_Date', 'Mark', 'Applicant', 'Nice_class']
 
+class csv_task_Admin(ImportExportModelAdmin):
+    list_display = ['ClientNo', 'ApplicationNo', 'CaseOfficer', 'ActivityDate', 'TaskDescription']
 
 
 # Register your models here.
 admin.site.register(Csv, csv_Admin)
 admin.site.register(csv_client, csv_client_Admin)
-admin.site.register(egazette, csv_egazette_Admin)
 admin.site.register(csv_matter, csv_matter_Admin)
+admin.site.register(csv_task, csv_task_Admin)
+admin.site.register(egazette, csv_egazette_Admin)

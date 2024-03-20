@@ -4,5 +4,7 @@ from . import views
 
 
 urlpatterns = [
-    path('list_convertclient', views.listclients, name = 'upload-list'),
+    path('list_convertclient/', views.listclients, name = 'upload-list-clients'),
+    path('list_convertmatters/', views.listmatters, name = 'upload-list-matters'),
+    path('list_converttask/', views.listtask, name = 'upload-list-tasks'),
 ]
