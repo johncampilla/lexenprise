@@ -20,7 +20,7 @@ class TempBills(models.Model):
     service_rendered = models.TextField(max_length=250, blank=True)
     spentinhrs = models.IntegerField(null=True, blank=True)
     spentinmin = models.IntegerField(null=True, blank=True)
-    USDamount = models.DecimalField(max_digits=10, decimal_places=2)
+    USDamount = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     PhPamount = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     status = models.CharField(max_length=15, choices=BILLSTATUS, blank=True, default='Open')
     recordedby = models.CharField(max_length=60, blank=True)

@@ -100,6 +100,42 @@ class csv_matter(models.Model):
     def __str__(self):
         return f"{self.Case1}"
 
+class csv_AR(models.Model):
+    Client_Number = models.CharField(max_length=15, blank=True, null=True)
+    ApplicationNo = models.CharField(max_length=25, blank=True, null=True)
+    BillNumber = models.CharField(max_length=10, blank=True, null=True)
+    BillDate = models.DateField(null=True, blank=True)
+    BillAmount = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    PesoAmount = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    EuroAmount = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    PaymentTag = models.CharField(max_length=5, blank=True, null=True)
+    ORNumber1 = models.CharField(max_length=10, blank=True, null=True) 	
+    ORDate1	= models.DateField(null=True, blank=True)
+    AmountPaid1	= models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    CheckNumber1 = models.CharField(max_length=30, blank=True, null=True)	
+    CheckDate1 = models.DateField(null=True, blank=True)	
+    ORNumber2 = models.CharField(max_length=10, blank=True, null=True)	
+    ORDate2	= models.DateField(null=True, blank=True)
+    AmountPaid2	= models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    CheckNumber2 = models.CharField(max_length=30, blank=True, null=True)		
+    CheckDate2	= models.DateField(null=True, blank=True)
+    ORNumber3 = models.CharField(max_length=10, blank=True, null=True)	
+    ORDate3	= models.DateField(null=True, blank=True)
+    AmountPaid3	= models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    CheckNumber3 = 	models.CharField(max_length=30, blank=True, null=True)		
+    CheckDate3 = models.DateField(null=True, blank=True)	
+    ContactPerson = models.CharField(max_length=60, blank=True, null=True)
+    Remarks	= models.TextField(blank=True, null=True)
+    DisCount = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    PF = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)	
+    FILINGFEES = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)	
+    OPE = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    Vat	= models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    PesoRate = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    StampID = models.CharField(max_length=60, blank=True, null=True)	
+    ModifiedBy = models.CharField(max_length=60, blank=True, null=True)	
+
+
 class csv_task(models.Model):
     ClientNo = models.CharField(max_length=15, null=True, blank=True)
     ApplicationNo = models.CharField(max_length=25, blank=True, null=True)
@@ -136,3 +172,20 @@ class egazette(models.Model):
 
     def __str__(self):
         return f"{self.Application_Number} - {self.Mark}"
+
+class csv_duedates(models.Model):
+
+    ClientNo = models.CharField(max_length=15, null=True, blank=True)
+    ApplicationNo = models.CharField(max_length=25, blank=True, null=True)
+    DueDates = models.DateField(null=True, blank=True)
+    DueCode = models.CharField(max_length=15, blank=True, null=True)
+    Activities = models.TextField(blank=True, null=True)
+    ReferenceNumber = models.CharField(max_length=60, blank=True, null=True)
+    Done = models.CharField(max_length=5, blank=True, null=True)
+    ActionDate = models.DateField(null=True, blank=True)
+    Complied = models.CharField(max_length=5, blank=True, null=True)
+    DateComplied = models.DateField(null=True, blank=True)
+    Remarks = models.TextField(blank=True, null=True) 
+
+
+

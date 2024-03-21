@@ -5,6 +5,7 @@ from . import views
 
 urlpatterns = [
     path('list_convertclient/', views.listclients, name = 'upload-list-clients'),
-    path('list_convertmatters/', views.listmatters, name = 'upload-list-matters'),
-    path('list_converttask/', views.listtask, name = 'upload-list-tasks'),
+    path("selected/client_csv/<int:pk>'", views.selectedclient, name = 'selected-csv_clients'),
+    path("list_converttask/<int:pk>'", views.listtask, name = 'upload-list-tasks'),
+    
 ]

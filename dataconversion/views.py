@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render
-from .models import Csv, csv_client, csv_matter, csv_task
+from .models import Csv, csv_client, csv_matter, csv_task, csv_duedates,csv_AR
 
 
 import csv
@@ -60,12 +60,27 @@ def listmatters(request):
 
     return render(request, 'dataconversion/listmatters.html',context)
 
-def listtask(request):
-    tasks = csv_task.objects.all()
-
+def listtask(request, pk):
+    matter = csv_matter.objects.get(id=pk)
+    tasks = csv_task.objects.filter(ApplicationNo = matter.ApplicationNo, ClientNo = matter.Client_Number)
+    duedates = csv_duedates.objects.filter(ApplicationNo = matter.ApplicationNo, ClientNo = matter.Client_Number)
     context = {
-        'tasks': tasks
+        'matter': matter,
+        'tasks': tasks,
+        'duedates': duedates,
     }
 
     return render(request, 'dataconversion/listtasks.html',context)
+
+def selectedclient(request, pk):
+    client = csv_client.objects.get(id=pk)
+    matter = csv_matter.objects.filter(Client_Number = client.CLIENTNUMBER)
+    invoices = csv_AR.objects.filter(Client_Number = client.CLIENTNUMBER) 
+    
+    context = {
+        'matters' : matter,
+        'client' : client,
+        'invoices': invoices,
+    }
+    return render(request, 'dataconversion/listmatters.html', context)
 

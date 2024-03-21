@@ -90,6 +90,7 @@ class Client_Data(models.Model):
     position = models.CharField(max_length=60, blank=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+    updatedby = models.CharField(max_length=5, null=True, blank=True)
 
 
     class Meta:

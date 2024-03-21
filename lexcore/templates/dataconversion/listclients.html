@@ -42,7 +42,7 @@ Data Migration - Clients
                         <td>{{ client.ClientType }}</td>
                         <td>{{ client.ContactPerson }}</td>
                         <td style="text-align: center;"><a class="btn btn-secondary btn-sm"
-                                href="#" title="Select"><i
+                                href="{% url 'selected-csv_clients' client.id %}" title="Select"><i
                                     class="far fa-hand-pointer"></i></a>
                         </td>
                     </tr>
