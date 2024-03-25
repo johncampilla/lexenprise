@@ -62,6 +62,7 @@ INSTALLED_APPS = [
     'easyaudit',
     'dataconversion',
     'import_export',
+    'tmwatch',
 
 ]
 

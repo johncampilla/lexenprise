@@ -264,7 +264,7 @@ def NewOutgoingActivity(request):
             sTask_ID = outgoingrec.id
 
             if tran_type == 'Billable' :
-                if case_type.case_type == 'IP':
+                if case_type.case_type == 'IP Filings':
                     createbilableserviceIP()
             
             return redirect('task-list')

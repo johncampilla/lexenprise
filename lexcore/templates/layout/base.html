@@ -595,65 +595,11 @@
         searching: true,
         bInfo: true,
         bSort: true,
+        scrollCollapse: true,
+        scrollY: "80vh",
+        scrollX: true,
 
-        dom: "lBfrtip",
-        buttons: [
-          {
-            //copy
-            extend: "copy",
-            text: '<i class="fas fa-clone"></i>',
-            className: "btn btn-secondary",
-            titleAttr: "Copy",
-            // choose columns you want to copy
-            exportOptions: {
-              columns: [0, 1, 2, 3, 4, 5, 6, 7],
-            },
-          },
-          {
-            //excel
-            extend: "excel",
-            text: '<i class="fas fa-file-excel"></i>',
-            className: "btn btn-secondary",
-            titleAttr: "Excel",
-            // choose columns you want to export
-            exportOptions: {
-              columns: [0, 1, 2, 3, 4, 5, 6, 7],
-            },
-          },
-          {
-            //print
-            extend: "print",
-            text: '<i class="fas fa-print"></i>',
-            titleAttr: "Print",
-            // choose columns you want to export
-            exportOptions: {
-              columns: [0, 1, 2, 3, 4, 5, 6, 7],
-            },
-            //font size when exporting to print
-            customize: function (win) {
-              $(win.document.body).css("font-size", "10pt");
-              $(win.document.body)
-                .find("table")
-                .addClass("compact")
-                .css("font-size", "inherit");
-            },
-          },
-          {
-            //PDF
-            extend: "pdf",
-            text: '<i class="fas fa-file-pdf"></i>',
-            className: "btn btn-secondary",
-            titleAttr: "PDF",
-            // choose columns you want to export
-            exportOptions: {
-              columns: [0, 1, 2, 3, 4, 5, 6, 7],
-            },
-            //center the table
-            tableHeader: {
-              alignment: "center",
-            },
-          },
-        ],
+
       });
       // var newSearch = $("#matterlist").DataTable();
       // $('#search').keyup(function () {
@@ -822,6 +768,22 @@
     // scrollY: '80vh',
   });
 </script>
+
+<script>
+  $("#tmresultlist").DataTable({
+    //datatables configurations
+    paging: true,
+    pagelength: 8,
+    lengthChange: true,
+    autoWidth: false,
+    searching: true,
+    bInfo: true,
+    bSort: true,
+    // scrollCollapse: true,
+    // scrollY: '80vh',
+  });
+</script>
+
 
 <script>
   $("#csv_invoicelist").DataTable({

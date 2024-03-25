@@ -16,18 +16,7 @@ Billing Accounts
         {% include 'layout/header.html' %}
         <!-- <link rel="stylesheet" href="{% static 'assets/css/style.css' %}"> -->
         <div class="my-3 mx-3">
-            <div class="dropdown mb-2">
-                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                    aria-expanded="false">
-                    InfoCards
-                </button>
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="{% url 'list-allmatters' %}">Prepare Billing </a></li>
-                    <li><a class="dropdown-item" href="#">Apply Payment</a></li>
-                    <li><a class="dropdown-item" href="#">List Unpaid Bills</a></li>
-                </ul>
-            </div>
-
+            {% include 'layout/subheader_AR.html' %}
             <div class="card">
                 <div class="card-header text-center mb-2" style=" color: black; background-color:rgb(228, 248, 188);">
 

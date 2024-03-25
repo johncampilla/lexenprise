@@ -164,7 +164,7 @@ class csv_task(models.Model):
     PaperNo = models.CharField(max_length=10, blank=True, null=True)
 
 class egazette(models.Model):
-    Application_Number	= models.CharField(max_length=25, null=True, blank=True)
+    Application_Number = models.CharField(max_length=25, null=True, blank=True)
     Filing_Date = models.CharField(max_length=40, null=True, blank=True)
     Mark = models.CharField(max_length=150, blank=True, null=True)	
     Applicant = models.CharField(max_length=150, blank=True, null=True)	
