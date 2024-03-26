@@ -100,6 +100,7 @@ def SelectMatter(request, pk):
         elif sapptype.apptype.upper() == "PCT" :
             return render(request, 'matter/matter_detail_ip_INV.html', context)
         elif sapptype.apptype.upper() == "DESIGN" :
+            print('im in design form')
             return render(request, 'matter/matter_detail_ip_DESIGN.html', context)
         elif sapptype.apptype.upper() == "UTILITY MODEL" :
             return render(request, 'matter/matter_detail_ip_INV.html', context)
@@ -916,13 +917,14 @@ def NewPriority(request, mid):
     return render(request, 'matter/new_priority.html', context)
 
 @login_required
-def NewActivity(request, mid):
+def NewActivity_out(request, mid):
     matter = Matters.objects.get(id=mid)
     if request.method == 'POST':
         form = ActivityForm(request.POST)
         if form.is_valid():
             activity_rec = form.save(commit=False)
             activity_rec.matter_id = matter.id
+            activity_rec.doc_type = "Outgoing"
             activity_rec.save()            
             return redirect('select-matter', mid)
         else:
@@ -934,7 +936,32 @@ def NewActivity(request, mid):
         'form': form,
         'matter':matter,
     }
-    return render(request, 'matter/newactivity.html', context)   
+    return render(request, 'matter/newactivity_outgoing.html', context)   
+
+@login_required
+def NewActivity_in(request, mid):
+    matter = Matters.objects.get(id=mid)
+    if request.method == 'POST':
+        form = ActivityForm(request.POST)
+        if form.is_valid():
+            activity_rec = form.save(commit=False)
+            activity_rec.matter_id = matter.id
+            activity_rec.doc_type = "Incoming"
+            activity_rec.tran_type = "Non-Billable"
+            activity_billstatus = "Unbilled"
+            activity_rec.save()            
+            return redirect('select-matter', mid)
+        else:
+            form = ActivityForm()
+    else:
+        form = ActivityForm()
+
+    context = {
+        'form': form,
+        'matter':matter,
+    }
+    return render(request, 'matter/newactivity_incoming.html', context)   
+
 
 @login_required
 def ViewActivity(request, pk, mid):

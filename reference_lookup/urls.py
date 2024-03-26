@@ -8,6 +8,7 @@ urlpatterns = [
     path('lookup/edittaskcode/<int:pk>/', views.EditTaskCode, name='edit-taskcode'),
 
     path("lookup/newduecode/", views.NewDueCode, name='new-duecode'),
+    path("lookup/newduecode_in/", views.NewDueCode_inward, name='new-duecode_inward'),
     path('lookup/editduecode/<int:pk>/', views.EditDueCode, name='edit-duecode'),
     path('lookup/removeduecode/<int:pk>/', views.RemoveDueCode, name='remove-duecode'),
 

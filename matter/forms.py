@@ -60,12 +60,13 @@ class EditMatterForm(forms.ModelForm):
 class EditMatterFormTM(forms.ModelForm):
     class Meta:
         model = Matters
-        fields = 'matter_id', 'referenceno','clientrefno','matterno', 'filing_date','filed_at','case_type','apptype','nature','matter_title','status','appearance','handling_lawyer','matter_contact_person','lawyers_involve','opposing_counsel','ipc_appno','ipc_appdate','publication_reference','publication_date','translation','claim_of_color','disclaimer','type_of_mark','reason_withdrawn','date_of_Withdrawn','IR_date','IR_renewalDate','IR_subsequentDate','nice_class','renewal_date','application_no','application_date','certificate_no','registration_date','stage_group','TM_Image'
+        fields = 'matter_id', 'referenceno','clientrefno','matterno', 'applicant' ,'filing_date','filed_at','case_type','apptype','nature','matter_title','status','appearance','handling_lawyer','matter_contact_person','lawyers_involve','opposing_counsel','ipc_appno','ipc_appdate','publication_reference','publication_date','translation','claim_of_color','disclaimer','type_of_mark','reason_withdrawn','date_of_Withdrawn','IR_date','IR_renewalDate','IR_subsequentDate','nice_class','renewal_date','application_no','application_date','certificate_no','registration_date','stage_group','TM_Image'
         widgets = {
             'matter_id' : forms.TextInput(attrs={'class': 'form-control'}),
             'referenceno': forms.TextInput(attrs={'class': 'form-control'}),
             'clientrefno': forms.TextInput(attrs={'class': 'form-control'}),
             'matterno': forms.TextInput(attrs={'class': 'form-control'}),
+            'applicant': forms.Select(attrs={'class': 'form-control', 'cols': 200, 'rows': 2}),
             'filing_date': NumberInput(attrs={'type': 'date','class':'form-control'}),
             'filed_at': forms.Select(attrs={'class': 'form-control', 'cols': 200, 'rows': 2}),
             'case_type': forms.Select(attrs={'class': 'form-control', 'cols': 200, 'rows': 2}),

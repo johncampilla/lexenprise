@@ -15,6 +15,60 @@ from dateutil.relativedelta import relativedelta
 
 # Create your models here.
 
+
+CATEGORIES = (
+    ('Corporate', 'Corporate/Company'),
+    ('Individual', 'Individual'),
+    ('School', 'School'),
+    ('Government', 'Government'),
+)
+ENTITYTYPE = (
+    ('Big Entity', 'Big Entity'),
+    ('Small Entity', 'Small Entity')
+)
+STATUS = (
+    ('Active', 'Active'),
+    ('Inactive', 'Inactive'),
+    ('Dormant', 'Dormant'),
+    ('Delinquent', ' Delinquent')
+)
+SEX = (
+    ('M','Male'),
+    ('F','Female'),
+)
+SEX = (
+    ('M','Male'),
+    ('F','Female'),
+)
+YESNO = (
+    ('Y','Yes'),
+    ('N','No'),
+)
+class Applicant(models.Model):
+    applicant = models.CharField(max_length=200)
+    category = models.CharField(max_length=20, choices=CATEGORIES, blank=True)
+    entity_type = models.CharField(max_length=15, choices=ENTITYTYPE, blank=True)
+    position = models.CharField(max_length=50, blank=True)
+    sex = models.CharField(max_length=10, blank=True, choices=SEX)
+    first_name = models.CharField(max_length=100, blank=True)
+    middle_name = models.CharField(max_length=100, blank=True)
+    last_name = models.CharField(max_length=100, blank=True)
+    contact_no = models.CharField(max_length=100, blank=True)
+    email = models.EmailField(blank=True)
+    nationality = models.CharField(max_length=25, blank=True)
+    applicant_isinventor= models.CharField(max_length=3, choices=YESNO, blank=True)
+    address = models.CharField(max_length=200, blank=True)
+    city = models.CharField(max_length=100, blank=True)
+    state = models.CharField(max_length=150, blank=True)
+    country = CountryField(blank_label="(select country)", blank=True)
+    zipcode = models.CharField(max_length=20, blank=True)
+
+    class Meta:
+        verbose_name_plural = 'Applicants'
+
+    def __str__(self):
+        return f"{self.applicant}"
+
 STATUS = (
         ('PENDING', 'PENDING'),
         ('REGISTERED', 'REGISTERED'),
@@ -97,6 +151,7 @@ class Matters(models.Model):
     IR_subsequentDate = models.DateField(null=True, blank=True)
     nice_class = models.CharField(max_length=60, blank=True, null=True)
     renewal_date = models.DateField(null=True, blank=True)
+    applicant = models.ForeignKey(Applicant, on_delete=models.CASCADE, blank=True, null=True)
 
 
 
@@ -109,62 +164,6 @@ class Matters(models.Model):
 
     class Meta:
         verbose_name_plural = 'Engagements/Accounts'
-
-CATEGORIES = (
-    ('Corporate', 'Corporate/Company'),
-    ('Individual', 'Individual'),
-    ('School', 'School'),
-    ('Government', 'Government'),
-)
-ENTITYTYPE = (
-    ('Big Entity', 'Big Entity'),
-    ('Small Entity', 'Small Entity')
-)
-STATUS = (
-    ('Active', 'Active'),
-    ('Inactive', 'Inactive'),
-    ('Dormant', 'Dormant'),
-    ('Delinquent', ' Delinquent')
-)
-SEX = (
-    ('M','Male'),
-    ('F','Female'),
-)
-SEX = (
-    ('M','Male'),
-    ('F','Female'),
-)
-YESNO = (
-    ('Y','Yes'),
-    ('N','No'),
-)
-
-
-
-class Applicant(models.Model):
-    applicant = models.CharField(max_length=200)
-    category = models.CharField(max_length=20, choices=CATEGORIES, blank=True)
-    entity_type = models.CharField(max_length=15, choices=ENTITYTYPE, blank=True)
-    position = models.CharField(max_length=50, blank=True)
-    sex = models.CharField(max_length=10, blank=True, choices=SEX)
-    first_name = models.CharField(max_length=100, blank=True)
-    middle_name = models.CharField(max_length=100, blank=True)
-    last_name = models.CharField(max_length=100, blank=True)
-    contact_no = models.CharField(max_length=100, blank=True)
-    email = models.EmailField(blank=True)
-    nationality = models.CharField(max_length=25, blank=True)
-    applicant_isinventor= models.CharField(max_length=3, choices=YESNO, blank=True)
-    address = models.CharField(max_length=200, blank=True)
-    city = models.CharField(max_length=100, blank=True)
-    state = models.CharField(max_length=150, blank=True)
-    country = CountryField(blank_label="(select country)", blank=True)
-    zipcode = models.CharField(max_length=20, blank=True)
-
-    class Meta:
-        verbose_name_plural = 'Applicants'
-
-    def __str__(self):
-        return f"{self.applicant}"
 
 class Matter_Applicant(models.Model):
     matter = models.ForeignKey(Matters, on_delete=models.CASCADE)

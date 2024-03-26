@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from . models import *
 from .forms import *
-from taskcode_settings.models import ActivityCodes, FilingFeeCodes, DueCode
+from taskcode_settings.models import ActivityCodes, FilingFeeCodes, DueCode, DueCode_Incoming
 from client.models import *
 from casefolder.models import Status
 from matter.models import Matters
@@ -21,6 +21,8 @@ def index(request):
     duecodes = DueCode.objects.all().order_by('folder_type', 'DueCode')
     activitygroup = ActivityGroup.objects.all().order_by('-case_type', 'seq')
     status = Status.objects.all().order_by('folder')
+    duecode_incoming = DueCode_Incoming.objects.all()
+
     print(status)
     formindustry = IndustryForm()
     formapptype = AppTypeForm()
@@ -41,6 +43,7 @@ def index(request):
         'duecodes' : duecodes,
         'activitygroup' : activitygroup,
         'status':status,
+        'duecode_incoming': duecode_incoming,
     }
     return render(request, 'reference_lookup/index.html', context)
 
@@ -512,6 +515,23 @@ def NewDueCode(request):
     }
 
     return render(request, 'reference_lookup/newduecode.html', context)
+
+def NewDueCode_inward(request):
+    if request.method == "POST":
+        form = DueCodeForm_Inward(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('reference-index')
+        else:
+            return redirect('new-taskcode')
+    else:
+        form = DueCodeForm_Inward()
+
+    context = {
+        'form': form,
+    }
+
+    return render(request, 'reference_lookup/newduecode_inward.html', context)
 
 
 def definefilingfees(request, pk):

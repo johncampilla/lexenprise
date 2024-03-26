@@ -97,3 +97,33 @@ class DueCode(models.Model):
 
     def __str__(self):
         return f'{self.Description} - {self.apptype.apptype}'
+
+
+class DueCode_Incoming(models.Model):
+    SelectBasis = {
+        ('In Days', 'In Days'),
+        ('In Months', 'In Months'),
+        ('In Years', 'In Years'),
+    }
+
+    SelectFieldBasis = {
+        ('Date Receipt', 'tran_date'),
+        ('Document Date', 'doc_date'),
+        ('Mailing Date', 'mailing_date'),
+    }
+
+    DueCode = models.CharField(max_length=20, blank=True)
+    Description = models.CharField(max_length=200, blank=True)
+    folder_type = models.ForeignKey(
+        FolderType, on_delete=models.CASCADE, null=True, blank=True)
+    apptype = models.ForeignKey(
+        AppType, on_delete=models.CASCADE, null=True, blank=True)
+    basisofcompute = models.CharField(
+        max_length=15, choices=SelectBasis, null=True, blank=True)
+    fieldbsis = models.CharField(
+        max_length=30, choices=SelectFieldBasis, null=True, blank=True)
+    terms = models.DecimalField(
+        null=True, blank=True, max_digits=5, decimal_places=3)
+
+    def __str__(self):
+        return f'{self.Description} - {self.apptype.apptype}'

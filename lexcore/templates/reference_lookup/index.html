@@ -290,46 +290,99 @@ Reference
                     </table>
                 </div>
                 <div class="tab-pane container fade" id="duecodes">
-                    <a class="btn btn-secondary btn-sm" href="{% url 'new-duecode' %}" title="Add Task Code"><i
-                            class="fa fa-plus"></i></a>
-                    <!-- Button trigger modal -->
-                    <table class="table-hover table-bordered table-sm small table" id="lookduecode">
-                        <thead class="table-primary text-center">
-                            <tr>
-                                <th scope="col" style="width:3%;">#</th>
-                                <th scope="col" style="width:10%;">Folder</th>
-                                <th scope="col" style="width:10%;">App Type</th>
-                                <th scope="col" style="width:10%;">Due Code</th>
-                                <th scope="col" style="width:35%;">Description</th>
-                                <th scope="col" style="width:10%;">Field Basis</th>
-                                <th scope="col" style="width:10%;">Basis Of Compute</th>
-                                <th scope="col" style="width:5%;">Terms</th>
-                                <th scope="col" style="width:5%;">Action</th>
+                    <div class="card mt-2 mb-2">
+                        <div class="card-header text-center mb-1" style=" color: black; background-color:rgb(228, 248, 188);">
+                            <a class="btn btn-secondary btn-sm" href="{% url 'new-duecode' %}" title="Add Task Code"><i
+                                class="fa fa-plus"></i></a>
+                               Mandatory Due Date Codes
+                        </div>
+        
+                        <table class="table-hover table-bordered table-sm small table" id="lookduecode">
+                            <thead class="table-primary text-center">
+                                <tr>
+                                    <th scope="col" style="width:3%;">#</th>
+                                    <th scope="col" style="width:10%;">Folder</th>
+                                    <th scope="col" style="width:10%;">App Type</th>
+                                    <th scope="col" style="width:10%;">Due Code</th>
+                                    <th scope="col" style="width:35%;">Description</th>
+                                    <th scope="col" style="width:10%;">Field Basis</th>
+                                    <th scope="col" style="width:10%;">Basis Of Compute</th>
+                                    <th scope="col" style="width:5%;">Terms</th>
+                                    <th scope="col" style="width:5%;">Action</th>
+    
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for due in duecodes %}
+                                <tr>
+                                    <td>{{ forloop.counter }}</td>
+                                    <td>{{ due.folder_type }}</td>
+                                    <td>{{ due.apptype }}</td>
+                                    <td>{{ due.DueCode }}</td>
+                                    <td>{{ due.Description }}</td>
+                                    <td>{{ due.fieldbsis }}</td>
+                                    <td>{{ due.basisofcompute }}</td>
+                                    <td>{{ due.terms }}</td>
+                                    <td><a class="btn btn-secondary btn-sm" href="{% url 'edit-duecode' due.id %}"
+                                            title="Edit Task Code"><i class="fas fa-edit"></i></a>
+                                    </td>
+                                    {% comment %} <td><a class="btn btn-secondary btn-sm" href="{% url 'remove-duecode' due.id %}"
+                                            title="Delete Code"><i class="fas fa-trash-alt"></i></a>
+                                    </td> {% endcomment %}
+    
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+    
+                    </div>
+                    <div class="card">
+                        <div class="card-header text-center mb-1" style=" color: black; background-color:rgb(228, 248, 188);">
+                            <a class="btn btn-secondary btn-sm" href="{% url 'new-duecode_inward' %}" title="Add Task Code"><i
+                                class="fa fa-plus"></i></a>
+                           Custom Due Date Codes
+                        </div>
 
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for due in duecodes %}
-                            <tr>
-                                <td>{{ forloop.counter }}</td>
-                                <td>{{ due.folder_type }}</td>
-                                <td>{{ due.apptype }}</td>
-                                <td>{{ due.DueCode }}</td>
-                                <td>{{ due.Description }}</td>
-                                <td>{{ due.fieldbsis }}</td>
-                                <td>{{ due.basisofcompute }}</td>
-                                <td>{{ due.terms }}</td>
-                                <td><a class="btn btn-secondary btn-sm" href="{% url 'edit-duecode' due.id %}"
-                                        title="Edit Task Code"><i class="fas fa-edit"></i></a>
-                                </td>
-                                {% comment %} <td><a class="btn btn-secondary btn-sm" href="{% url 'remove-duecode' due.id %}"
-                                        title="Delete Code"><i class="fas fa-trash-alt"></i></a>
-                                </td> {% endcomment %}
+                        <table class="table-hover table-bordered table-sm small table" id="lookduecode_in">
+                            <thead class="table-primary text-center">
+                                <tr>
+                                    <th scope="col" style="width:3%;">#</th>
+                                    <th scope="col" style="width:10%;">Folder</th>
+                                    <th scope="col" style="width:10%;">App Type</th>
+                                    <th scope="col" style="width:10%;">Due Code</th>
+                                    <th scope="col" style="width:35%;">Description</th>
+                                    <th scope="col" style="width:10%;">Field Basis</th>
+                                    <th scope="col" style="width:10%;">Basis Of Compute</th>
+                                    <th scope="col" style="width:5%;">Terms</th>
+                                    <th scope="col" style="width:5%;">Action</th>
+    
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for due_in in duecode_incoming %}
+                                <tr>
+                                    <td>{{ forloop.counter }}</td>
+                                    <td>{{ due_in.folder_type }}</td>
+                                    <td>{{ due_in.apptype }}</td>
+                                    <td>{{ due_in.DueCode }}</td>
+                                    <td>{{ due_in.Description }}</td>
+                                    <td>{{ due_in.fieldbsis }}</td>
+                                    <td>{{ due_in.basisofcompute }}</td>
+                                    <td>{{ due_in.terms }}</td>
+                                    <td><a class="btn btn-secondary btn-sm" href="#"
+                                            title="Edit Task Code"><i class="fas fa-edit"></i></a>
+                                    </td>
+                                    {% comment %} <td><a class="btn btn-secondary btn-sm" href="#"
+                                            title="Delete Code"><i class="fas fa-trash-alt"></i></a>
+                                    </td> {% endcomment %}
+    
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+    
+                    </div>
 
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
                 </div>
                 <div class="tab-pane container fade" id="stages">
                     <a class="btn btn-secondary btn-sm" href="{% url 'new-activitygroup' %}" title="Add Task Code"><i

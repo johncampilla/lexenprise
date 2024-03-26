@@ -310,22 +310,35 @@ Patent Details
                         </div>
                         <div class="tab-pane container fade" id="activities">
                             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 mb-md-0">
-                                <li><a class="btn btn-outline-primary btn-sm mb-1 mt-1"
+
+                                <div class="dropdown mt-2 mb-2">
+                                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                      Add Activitiy
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                      <li><a class="dropdown-item" href="{% url 'new-activity-outgoing' matter.id %}">Outgoing</a></li>
+                                      <li><a class="dropdown-item" href="{% url 'new-activity-incoming' matter.id %}">Incoming</a></li>
+                                      <li><a class="dropdown-item" href="#">Others</a></li>
+                                    </ul>
+                                </div>                                
+                                <!-- <li><a class="btn btn-outline-primary btn-sm mb-1 mt-1"
                                         href="{% url 'new-activity' matter.id %}" title="New"><i class="fa fa-plus"></i>
                                         Activity
                                     </a>
-                                </li>
+                                </li> -->
                             </ul>
-
                             <table class="table-hover table-bordered table-sm small table" id="activitylisting">
                                 <thead class="table-primary text-center">
                                     <tr>
-                                        <th scope="col" style="width:3%;">#</th>
-                                        <th scope="col" style="width:10%;">Date</th>
-                                        <th scope="col" style="width:10%;">Doc Date</th>
+                                        <th scope="col" style="width:2%;">#</th>
+                                        <th scope="col" style="width:10%;">Tran Date</th>
                                         <th scope="col" style="width:10%;">Lawyer</th>
-                                        <th scope="col" style="width:62%;">Activity</th>
+                                        <th scope="col" style="width:10%;">Tran Type</th>
+                                        <th scope="col" style="width:10%;">Doc Type</th>
+                                        <th scope="col" style="width:53%;">Activity</th>
                                         <th scope="col" style="width:5%;">Action</th>
+
+
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -333,18 +346,18 @@ Patent Details
                                     <tr>
                                         <td>{{ forloop.counter }}</td>
                                         <td>{{ activity.tran_date | date:'m/d/Y' }}</td>
-                                        <td>{{ activity.doc_date | date:'m/d/Y' }}</td>
-                                        <td>{{ activity.lawyer.access_code }}</td>
+                                        <td>{{ activity.lawyer }}</td>
+                                        <td>{{ activity.tran_type }}</td>
+                                        <td>{{ activity.mail_type }}</td>
                                         <td>{{ activity.task }}</td>
                                         <td><a class="btn btn-secondary btn-sm"
-                                                href="{% url 'edit-activity' activity.id matter.id %}" title="Modify"><i
-                                                    class="far fa-hand-pointer"></i></a>
+                                                href="{% url 'view-activity' activity.id matter.id %}" title="Modify"><i
+                                                    class="fas fa-edit"></i></a>
                                         </td>
                                     </tr>
                                     {% endfor %}
                                 </tbody>
                             </table>
-
                         </div>
                         <div class="tab-pane container fade mb-2" id="priorities">
                             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 mb-md-0">

@@ -81,7 +81,8 @@ urlpatterns = [
     path("matter/classofgoods/save/", views.newclgoodsprofile, name='profile-classofgoods'),
 
 #
-    path("matter/activity/add/<int:mid>/'", views.NewActivity, name='new-activity'),
+    path("matter/activity/out_add/<int:mid>/'", views.NewActivity_out, name='new-activity-outgoing'),
+    path("matter/activity/in_add/<int:mid>/'", views.NewActivity_in, name='new-activity-incoming'),
 
 #email
     path("matter/viewemail/<int:pk>/'", views.view_email, name='view-email'),

@@ -1,6 +1,6 @@
 from typing import Any
 from django import forms
-from taskcode_settings.models import ActivityCodes, FilingFeeCodes, DueCode
+from taskcode_settings.models import ActivityCodes, FilingFeeCodes, DueCode, DueCode_Incoming
 from .models import *
 from client.models import NatureOfBusiness, Currency
 from casefolder.models import FolderType, Status
@@ -107,6 +107,21 @@ class DueCodeForm(forms.ModelForm):
             'fieldbsis': forms.Select(attrs={'class': 'form-control', 'cols': 200, 'rows': 2}),
             'terms': NumberInput(attrs={"class": "form-control", "inputmode": "decimal"}),
         }
+
+class DueCodeForm_Inward(forms.ModelForm):
+    class Meta:
+        model = DueCode_Incoming
+        fields = '__all__'
+        widgets = {
+            'DueCode': forms.TextInput(attrs={'class': 'form-control'}),
+            'Description': forms.TextInput(attrs={'class': 'form-control'}),
+            'folder_type': forms.Select(attrs={'class': 'form-control', 'cols': 200, 'rows': 2}),
+            'apptype' : forms.Select(attrs={'class': 'form-control', 'cols': 200, 'rows': 2}),
+            'basisofcompute': forms.Select(attrs={'class': 'form-control', 'cols': 200, 'rows': 2}),
+            'fieldbsis': forms.Select(attrs={'class': 'form-control', 'cols': 200, 'rows': 2}),
+            'terms': NumberInput(attrs={"class": "form-control", "inputmode": "decimal"}),
+        }
+
 
 class FilingFeesForm(forms.ModelForm):
     class Meta:
