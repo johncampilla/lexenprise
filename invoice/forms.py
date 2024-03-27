@@ -30,7 +30,7 @@ class TempBillsForm(forms.ModelForm):
             'spentinmin' : NumberInput(attrs={"class": "form-control", "inputmode": "decimal"}),
             'USDamount' : NumberInput(attrs={"class": "form-control", "inputmode": "decimal"}),
             'PhPamount' : NumberInput(attrs={"class": "form-control", "inputmode": "decimal"}),
-            'status' : forms.TextInput(attrs={'class': 'form-control'}),
+            'status' : forms.Select(attrs={'class': 'form-control', 'cols': 200, 'rows': 2}),
         }
 
 class TempFeesForm(forms.ModelForm):
@@ -42,6 +42,20 @@ class TempFeesForm(forms.ModelForm):
             'filing_particulars' : forms.Textarea(attrs={'class': 'form-control', 'cols': 200, 'rows': 3}), 
             'USDamount' : NumberInput(attrs={"class": "form-control", "inputmode": "decimal"}),
             'PhPamount' : NumberInput(attrs={"class": "form-control", "inputmode": "decimal"}),
-            'status' : forms.TextInput(attrs={'class': 'form-control'}),
+            'status' : forms.Select(attrs={'class': 'form-control', 'cols': 200, 'rows': 2}),
         }
+
+class TempExpFeesForm(forms.ModelForm):
+    class Meta:
+        model = TempOPE
+        fields = 'tran_date', 'expnse_particulars', 'USDamount', 'PhPamount', 'status'
+        widgets = {
+            'tran_date' : NumberInput(attrs={'type': 'date','class':'form-control'}),
+            'expnse_particulars' : forms.Textarea(attrs={'class': 'form-control', 'cols': 200, 'rows': 3}),
+            'USDamount' : NumberInput(attrs={"class": "form-control", "inputmode": "decimal"}),
+            'PhPamount' : NumberInput(attrs={"class": "form-control", "inputmode": "decimal"}),
+            'status' : forms.Select(attrs={'class': 'form-control', 'cols': 200, 'rows': 2}),
+
+        }
+
 

@@ -10,8 +10,6 @@ class TempBills(models.Model):
         ('Proforma', 'Proforma'),
         ('Billed', 'Billed'),
         ('Cancelled', 'Cancelled'),
-        ('Waived', 'Waived'),
-
     )
 
     matter = models.ForeignKey(Matters, on_delete=models.CASCADE)
@@ -26,6 +24,8 @@ class TempBills(models.Model):
     recordedby = models.CharField(max_length=60, blank=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+    peso_rate_used = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
+
 
     class Meta:
         verbose_name_plural = 'Temporary Billing Services'
@@ -41,8 +41,6 @@ class TempFilingFees(models.Model):
         ('Proforma', 'Proforma'),
         ('Billed', 'Billed'),
         ('Cancelled', 'Cancelled'),
-        ('Waived', 'Waived'),
-
     )
 
     matter = models.ForeignKey(Matters, on_delete=models.CASCADE)
@@ -54,26 +52,28 @@ class TempFilingFees(models.Model):
     status = models.CharField(max_length=15, choices=FILINGSTATUS, blank=True, default='Open')
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+    peso_rate_used = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
+
 
 class TempOPE(models.Model):
 
     FILINGSTATUS = (
         ('Open', 'Open'),
+        ('Proforma', 'Proforma'),
         ('Billed', 'Billed'),
         ('Cancelled', 'Cancelled'),
-        ('Waived', 'Waived'),
-
     )
-
+    
     matter = models.ForeignKey(Matters, on_delete=models.CASCADE)
     service = models.ForeignKey(TempBills, on_delete=models.CASCADE, blank=True, null=True)
     tran_date = models.DateField(null=True, blank=True)
     expnse_particulars = models.CharField(max_length=250, null=True, blank=True)
-    USDamount = models.DecimalField(max_digits=10, decimal_places=2)
-    PhPamount = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    USDamount = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True, default=0)
+    PhPamount = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True, default=0)
     status = models.CharField(max_length=15, choices=FILINGSTATUS, blank=True, default='Open')
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+    peso_rate_used = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
 
 class AccountsReceivable(models.Model):
 
@@ -111,6 +111,7 @@ class Bills(models.Model):
     spentinmin = models.IntegerField(null=True, blank=True)
     pf_USDamount = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
     pf_PhPamount = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
+    peso_rate_used = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
 
     def __str__(self):
         return f'{self.ar} - {self.service_rendered}'
@@ -129,6 +130,7 @@ class FilingFees(models.Model):
     filing_particulars = models.TextField(blank=True)
     filing_fee_USDamount = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
     filing_fee_PHPamount = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True) 
+    peso_rate_used = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
 
     def __str__(self):
         return f'{self.ar.bill_no} - {self.filing_particulars}'
@@ -141,9 +143,12 @@ class OPE(models.Model):
     exp_particulars = models.TextField(blank=True)
     exp_USDAmount = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
     exp_PHPAmount = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True)
+    peso_rate_used = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
 
     def __str__(self):
         return f'{self.ar.bill_no} - {self.exp_particulars}'
+    
+
 
 # class BookTitle(models.Model):
 #     title = models.CharField(max_length=200, unique=True)

@@ -9,13 +9,24 @@ urlpatterns = [
     path("invoice/invimages/<int:pk>/'", views.ViewInvoiceImage, name='view-invoice-image'),
     path('invoice/invmatters/', views.prepareinvoice, name='list-allmatters'),
     path("invoice/tempbill/<int:pk>/'", views.tobillmatter, name='invoice-matter'),
+    path("invoice/viewinvoices/<int:pk>/'", views.postedinvoices, name='matter-posted-invoices'),
+
+
+    path("invoice/openbillables/<int:pk>/'", views.viewbillableservices, name='billable-activities'),
+    path("invoice/cancelbillables/<int:pk>/'", views.cancelbillable, name='CN_billable-activities'),
+
 
     path('invoice/newPF/', views.NewTempPf, name='invoice-newPF'),
     path("invoice/editPF/<int:pk>/'", views.EditTempPf, name='invoice-editPF'),
     path("invoice/deletePF/<int:pk>/'", views.RemoveTempPf, name='invoice-deletePF'),
 
+    path("invoice/editPFtoOpen/<int:pk>/'", views.EditToOpen, name='invoice-toOpen'),
+
+
     path('invoice/newFees/', views.NewTempFees, name='invoice-newFees'),
     path("invoice/editfees/<int:pk>/'", views.EditTempFees, name='invoice-editfees'),
     path("invoice/deleteFees/<int:pk>/'", views.RemoveTempfees, name='invoice-deletefees'),
+
+    path("invoice/editope/<int:pk>/'", views.EditOPE, name='invoice-editOPE'),
 
 ]

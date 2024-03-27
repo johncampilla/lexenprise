@@ -24,4 +24,7 @@ urlpatterns = [
 
     path("activity/edittempfees/<int:pk>/'", views.edittempfees, name='edit-tempfees'),
 
+    path("activity/addexpense/<int:pk>/'", views.AddExpense, name='new-expense'),
+
+
 ]

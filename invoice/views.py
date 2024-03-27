@@ -117,12 +117,20 @@ def prepareinvoice(request):
 
     return render(request, 'invoice/allmatters.html', context)
 
+def postedinvoices(request, pk):
+    matter = Matters.objects.get(id = pk)
+    invoices = AccountsReceivable.objects.filter(matter_id = pk)
+    context = {
+        'invoices' : invoices,
+        'matter' : matter
+    }
+    return render(request, 'invoice/matter_postedinvoices.html', context)
+
 def tobillmatter(request, pk):
     matter = Matters.objects.get(id = pk)
-    temppf = TempBills.objects.filter(matter_id = pk)
+    temppf = TempBills.objects.filter(matter_id = pk, status="Open").values
     tempfees = TempFilingFees.objects.filter(matter_id =pk)
     tempOPE = TempOPE.objects.filter(matter_id = pk)
-    invoices = AccountsReceivable.objects.filter(matter_id = pk)
     formPF = TempBillsForm()
     formFees = TempFeesForm()
 
@@ -132,11 +140,48 @@ def tobillmatter(request, pk):
         'tempfees' : tempfees,
         'tempOPE' : tempOPE,
         'matter' : matter,
-        'invoices': invoices,
         'formPF' : formPF,
         'formFees':formFees,
     }
     return render(request, 'invoice/matter_invoicedetail.html', context)
+
+def viewbillableservices(request,pk):
+    matter = Matters.objects.get(id = pk)
+
+    temppf = TempBills.objects.filter(matter_id = pk)
+    tempfees = TempFilingFees.objects.filter(matter_id = pk)
+    tempOPE = TempOPE.objects.filter(matter_id = pk)
+
+    context = {
+        'tempbills': temppf,
+        'tempfees': tempfees,
+        'tempOPE': tempOPE,
+        'matter' : matter,
+    }
+    return render(request, 'invoice/matter_billableactivities.html', context)
+
+def EditToOpen(request, pk):
+    temppf = TempBills.objects.get(id = pk)
+    matter = Matters.objects.get(id = temppf.matter_id)
+    print(matter)
+    if temppf.status == 'Proforma' :
+        temppf.status = 'Open'
+        temppf.save()
+    elif temppf.status == 'Open' :
+        temppf.status = 'Proforma'
+        temppf.save()
+
+    return redirect('billable-activities', matter.id) 
+
+def cancelbillable(request, pk):
+    temppf = TempBills.objects.get(id = pk)
+    matter = Matters.objects.get(id = temppf.matter_id)
+    print(matter)
+    temppf.status = 'Cancelled'
+    temppf.save()
+    return redirect('billable-activities', matter.id) 
+
+
 
 def NewTempPf(request):
     if request.method == 'POST':
@@ -181,6 +226,26 @@ def RemoveTempPf(request, pk):
     mid = temppf.matter_id
     temppf.delete()
     return redirect('invoice-matter', mid)
+
+def EditOPE(request,pk):
+    ope = TempOPE.objects.get(id=pk)
+    matter = Matters.objects.get(id = ope.matter_id)
+    if request.method == 'POST':
+        form = TempExpFeesForm(request.POST, instance=ope)
+        if form.is_valid():
+            form.save()
+            return redirect('invoice-matter', ope.matter_id)
+        else:
+            form = TempExpFeesForm(instance=ope)
+    else:
+        form = TempExpFeesForm(instance=ope)
+
+    context = {
+        'form': form,
+        'ope': ope,
+        'matter': matter,
+    }
+    return render(request, 'invoice/invoice_editope.html', context)
 
 def EditTempFees(request, pk):
     fees = TempFilingFees.objects.get(id=pk)

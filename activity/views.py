@@ -6,12 +6,14 @@ from reference_lookup.models import CaseType
 from taskcode_settings.models import ActivityCodes, FilingFeeCodes
 from invoice.models import TempBills, TempFilingFees, TempOPE
 from casefolder.models import Lawyer_Data
-from .forms import ActivityForm, OutgoingActivityForm, IncomingActivityForm, filingdocforms
-from invoice.forms import TempBillsForm, TempFeesForm
+from .forms import ActivityForm, OutgoingActivityForm, IncomingActivityForm, filingdocforms 
+from invoice.forms import TempBillsForm, TempFeesForm, TempExpFeesForm
 from django.urls import reverse, reverse_lazy
 from django.contrib import messages
 import string
 from django.contrib.auth.decorators import login_required 
+from django.conf import settings
+
 
 @login_required
 def DocketingListView(request):
@@ -285,6 +287,7 @@ def SelectedActivity(request, pk):
     trandate = task.tran_date
     billables = TempBills.objects.filter(tran_date = trandate, matter_id = mid)
     tempfees = TempFilingFees.objects.filter(tran_date = trandate, matter_id = mid)
+    tempOPE = TempOPE.objects.filter(matter_id = mid)
     matter = Matters.objects.get(id = mid)
 
     context = {
@@ -293,6 +296,7 @@ def SelectedActivity(request, pk):
         'tempbills' : billables,
         'tempfees' : tempfees,
         'activities' : activities,
+        'tempOPE' : tempOPE,
     }
     return render(request, 'activity/selected_activitydetail.html', context)
 
@@ -321,6 +325,37 @@ def edittempbills(request, pk):
         'task': task,
     }
     return render(request, 'activity/edittempbills.html', context)
+
+def AddExpense(request, pk):
+    matter = Matters.objects.get(id=pk)
+    peso_rate = settings.EXCHANGE_RATE
+    if request.method == 'POST':
+        form = TempExpFeesForm(request.POST)
+        if form.is_valid():
+            expense_rec = form.save(commit=False)
+            expense_rec.matter_id = matter.id
+            if expense_rec.USDamount > 0:
+                if expense_rec.PhPamount > 0:
+                    x=1
+                else:
+                    expense_rec.PhPamount = expense_rec.USDamount * peso_rate
+            else:
+                if expense_rec.PhPamount > 0 :
+                    expense_rec.USDamount = expense_rec.PhPamount / 44.00
+
+            expense_rec.save()            
+            form.save()
+            return redirect('select-activity', pk)
+        else:
+            form = TempExpFeesForm()
+    else:
+        form = TempExpFeesForm()
+
+    context = {
+        'form': form,
+        'matter':matter,
+    }
+    return render(request, 'activity/newope.html', context)   
 
 @login_required
 def edittempfees(request, pk):
